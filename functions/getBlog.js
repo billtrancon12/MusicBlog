@@ -86,8 +86,17 @@ router.get('/images/', async function(req, res){
     const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
     await delay(1000)
     const result = await gfs.files.findOne({ filename: req.query.filename })
-    const readStream = gridfsBucket.openDownloadStream(result._id);
-    readStream.pipe(res);
+    const readStream = await gridfsBucket.openDownloadStream(result._id);
+    // readStream.pipe(res);
+    const bufs = [];
+    readStream.on('data', function (chunk) {
+        bufs.push(chunk);
+    });
+    readStream.on('end', function () {
+        const fbuf = Buffer.concat(bufs);
+        const base64 = fbuf.toString('base64');
+        res.json(JSON.stringify({image: base64}))
+    });
 });
 
 app.use(`/.netlify/functions/getBlog`, router);
