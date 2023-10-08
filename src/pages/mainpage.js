@@ -41,6 +41,7 @@ const Homepage = () =>{
                         blogsArr.push(blog)
                         setBlogs(blogsArr)
                     }
+                    setBlogs(blogsArr)
                 }).catch((err)=>console.log(err))
             }
             fetchData()
