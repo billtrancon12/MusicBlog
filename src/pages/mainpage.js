@@ -16,7 +16,7 @@ const Homepage = () =>{
     useEffect(() => {
         if(!isFetch){
             async function fetchData(){
-                await axios.get('http://localhost:4001/blogs').then(async (res)=>{
+                await axios.get('/.netlify/functions/getBlog/blogs').then(async (res)=>{
                     const response = JSON.parse(res.data)
                     let blogsArr = []
                     let dataArr = JSON.parse(response.message.body)
@@ -25,13 +25,13 @@ const Homepage = () =>{
                         const data = dataArr[i]
                         let imgData;
                     
-                        await axios.get(`http://localhost:4000/files/?filename=${data.image}`, {responseType: "arraybuffer"}).then((res)=>{
+                        await axios.get(`/.netlify/functions/getBlog/image/?filename=${data.image}`, {responseType: "arraybuffer"}).then((res)=>{
                             imgData = Buffer.from(res.data, 'binary').toString('base64')
                         }).catch((err)=>console.log(err))
 
                         const blog = 
                         <BlogWrapper
-                            href={`http://localhost:3000/blog/?topic=${data.topic}`}
+                            href={`http://localhost:8888/blog/?topic=${data.topic}`}
                             src={`data:image/png;base64,${imgData}`}
                             topic={data.topic}
                             content={data.content}
