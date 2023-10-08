@@ -158,11 +158,13 @@ router.post('/upload', upload.single('file_input'), async function(req, res){
     res.json(JSON.stringify({status: true, message: "Success"}));
 })
 
-router.get('/files/', async function(req, res){
-    const result = await gfs.files.findOne({ filename: req.query.filename })
-    const readStream = gridfsBucket.openDownloadStream(result._id);
-    readStream.pipe(res);
-});
+// router.get('/files/', async function(req, res){
+//     const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+//     await delay(1000)
+//     const result = await gfs.files.findOne({ filename: req.query.filename })
+//     const readStream = gridfsBucket.openDownloadStream(result._id);
+//     readStream.pipe(res);
+// });
 
 app.use(`/.netlify/functions/postBlog`, router);
 

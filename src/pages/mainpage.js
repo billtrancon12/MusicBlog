@@ -6,7 +6,6 @@ import { useEffect } from "react";
 import BlogWrapper from "../components/blogWrapper";
 import { useState } from "react";
 import axios from "axios";
-import { Buffer } from 'buffer';
 import "../css/homepage.css"
 import '../css/media.css'
 
@@ -25,8 +24,10 @@ const Homepage = () =>{
                         const data = dataArr[i]
                         let imgData;
                     
-                        await axios.get(`/.netlify/functions/getBlog/images/?filename=${data.image}`, {responseType: "arraybuffer"}).then((res)=>{
-                            imgData = Buffer.from(res.data, 'binary').toString('base64')
+                        await axios.get(`/.netlify/functions/getBlog/images/?filename=${data.image}`).then((res)=>{
+                            // imgData = Buffer.from(res.data, 'binary').toString('base64')
+                            const result = JSON.parse(res.data)
+                            imgData = result.image
                         }).catch((err)=>console.log(err))
 
                         const blog = 

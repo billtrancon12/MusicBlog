@@ -15,7 +15,7 @@ export default function BlogEditor() {
 
     if (editorRef.current) {
       let status;
-      await axios.post('http://localhost:4000/check', {topic: topic}, {headers: {'Content-Type': 'application/json'}}).then((response)=>{
+      await axios.post('/.netlify/functions/postBlog/check', {topic: topic}, {headers: {'Content-Type': 'application/json'}}).then((response)=>{
         const res = JSON.parse(response.data)
         status = res.status
         console.log(res)
@@ -28,7 +28,7 @@ export default function BlogEditor() {
         formData.append("topic", topic)
         formData.append("date", new Date())
         formData.append("content", editorRef.current.getContent())
-        await axios.post('http://localhost:4000/upload', formData, {headers: {'Content-Type': 'multipart/form-data'}}).then((response) => {
+        await axios.post('/.netlify/functions/postBlog/upload', formData, {headers: {'Content-Type': 'multipart/form-data'}}).then((response) => {
           const res = JSON.parse(response.data)
           if(res.status) {
             window.alert("Success!")

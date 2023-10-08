@@ -45,7 +45,6 @@ const BlogWrapper = (props) =>{
                     setTextArr(tempArr)
                 }
                 var tempText = (textArr[i] === undefined) ? tempArr[i] : textArr[i]
-                console.log(tempText)
                 el.childNodes[0].innerHTML = condenseText(tempText, maxLength)
                 i++;
             })
