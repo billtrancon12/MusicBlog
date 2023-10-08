@@ -1,0 +1,18 @@
+
+.homepage_button_wrapper > button{
+    display: inline;
+    margin: 10px 5px;
+}
+
+.homepage_button_wrapper{
+    padding-bottom: 30px;
+    border-bottom: 1px solid black;
+    width: fit-content;
+    margin: auto;
+}
+
+@media only screen and (max-width: 500px){
+    .homepage_button_wrapper > button{
+        display: block;
+    }
+}

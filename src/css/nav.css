@@ -1,0 +1,85 @@
+.rs-nav-default, .rs-nav-item, .rs-nav-tabs{
+    overflow: hidden;
+    position: relative;
+    transition: color .15s ease-out,background-color .15s ease-out;
+}
+
+.rs-nav-default{
+    background-color: rgba(133, 193, 229, 0.2);
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+}
+
+.rs-nav-item{
+    cursor: pointer;
+    outline: none;
+    overflow: hidden;
+    padding: 8px 12px;
+    text-decoration: none;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: black;
+    margin: 0px 3px;
+}
+
+.rs-nav-item:hover{
+    background-color: #C2E8FF;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+}
+
+.home_nav{
+    display: flex;
+    justify-content: center;
+}
+
+.middle_nav{
+    display: inline-flex;
+    width: 80%;
+    justify-content: center;
+}
+
+.right_nav{
+    display: inline-flex;
+}
+
+.right_nav > div{
+    margin: 0px 10px;
+}
+
+.right_nav > div > svg{
+    position:relative;
+    top: calc(50% - 10px);
+}
+
+.menu_icon_wrapper{
+    margin-left: 15px;
+}
+
+.menu_icon_wrapper > a > svg{
+    color: black
+}
+
+.menu_clicked{
+    background-color: #C2E8FF;
+    box-shadow: 1px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+/* @media only screen and (max-width: 800px) {
+    .middle_nav{
+        width: 75%;
+    }
+}
+
+@media only screen and (max-width: 650px) {
+    .middle_nav{
+        width: 65%;
+    }
+}
+
+@media only screen and (max-width: 500px){
+    .middle_nav{
+        width: 75%;
+    }
+    .menu_icon_wrapper{
+        margin: auto;
+    }
+} */
