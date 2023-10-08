@@ -79,14 +79,14 @@ router.get('/blog', async function(req, res){
     res.json(JSON.stringify({status: true, message: result}))
 })
 
-router.get('/images/', async function(req, res){
+app.get('/images/', async function(req, res){
     const result = await gfs.files.findOne({ filename: req.query.filename })
     const readStream = gridfsBucket.openDownloadStream(result._id);
     readStream.pipe(res);
 });
 
-app.use(`/.netlify/express/getBlog`, router);
-module.exports = app;
-module.exports.handler = serverless(app);
+// app.use(`/.netlify/express/getBlog`, router);
+// module.exports = app;
+// module.exports.handler = serverless(app);
 
-// app.listen(4001);
+app.listen(4001);

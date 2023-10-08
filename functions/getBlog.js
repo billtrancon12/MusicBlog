@@ -82,8 +82,8 @@ router.get('/blog', async function(req, res){
 
 router.get('/images/', async function(req, res){
     const result = await gfs.files.findOne({ filename: req.query.filename })
-    const readStream = gridfsBucket.openDownloadStream(result._id);
-    readStream.pipe(res);
+    // const readStream = gridfsBucket.openDownloadStream(result._id);
+    // readStream.pipe(res);
 });
 
 app.use(`/.netlify/functions/getBlog`, router);

@@ -25,7 +25,7 @@ const Homepage = () =>{
                         const data = dataArr[i]
                         let imgData;
                     
-                        await axios.get(`/.netlify/functions/getBlog/image/?filename=${data.image}`, {responseType: "arraybuffer"}).then((res)=>{
+                        await axios.get(`http://localhost:4001/images/?filename=${data.image}`, {responseType: "arraybuffer"}).then((res)=>{
                             imgData = Buffer.from(res.data, 'binary').toString('base64')
                         }).catch((err)=>console.log(err))
 
