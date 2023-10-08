@@ -8,24 +8,29 @@ import { useState } from "react";
 import axios from "axios";
 import "../css/homepage.css"
 import '../css/media.css'
+import MoreButton from "../components/moreButton";
 
 const Homepage = () =>{
-    const [blogs, setBlogs] = useState(null)
+    const [blogs, setBlogs] = useState([])
     const [isFetch, setFetch] = useState(false)
+    const [moreButton, setMoreButton] = useState("hide")
+    const [loadFrom, setLoadFrom] = useState(0)
+    const [loadEnd, setLoadEnd] = useState(2)
     useEffect(() => {
-        if(!isFetch){
+        localStorage.clear()
+        if(!isFetch && (localStorage.getItem('last fetched') === null || localStorage.getItem('last fetched') === 'null')){
             async function fetchData(){
-                await axios.get('/.netlify/functions/getBlog/blogs').then(async (res)=>{
+                await axios.get(`/.netlify/functions/getBlog/blogs/?rangeFrom=${loadFrom}&rangeEnd=${loadEnd}`).then(async (res)=>{
                     const response = JSON.parse(res.data)
                     let blogsArr = []
-                    let dataArr = JSON.parse(response.message.body)
+                    let dataArr = response.message.body.data
+                    let latestId = response.message.body.latestId
 
                     for(let i = 0; i < dataArr.length; i++){
                         const data = dataArr[i]
                         let imgData;
                     
                         await axios.get(`/.netlify/functions/getBlog/images/?filename=${data.image}`).then((res)=>{
-                            // imgData = Buffer.from(res.data, 'binary').toString('base64')
                             const result = JSON.parse(res.data)
                             imgData = result.image
                         }).catch((err)=>console.log(err))
@@ -40,25 +45,72 @@ const Homepage = () =>{
                         ></BlogWrapper>
                         blogsArr.push(blog)
                     }
+                    console.log(localStorage.getItem('fetched homepage'))
+                    // Get the cached database 
+                    if(localStorage.getItem('fetched homepage') !== null){
+                        const tempArrs = JSON.parse(localStorage.getItem('fetched homepage'))
+                        const newFetchedBlogs = blogsArr
+                        blogsArr = []
+                        for(let i = 0; i < tempArrs.length; i++){ 
+                            const blogData = tempArrs[i].props
+                            blogsArr.push(<BlogWrapper
+                                href={blogData.href}
+                                src={blogData.src}
+                                topic={blogData.topic}
+                                content={blogData.content}
+                                key={i}
+                        ></BlogWrapper>)
+                        }
+                        console.log(blogsArr)
+                        for(let i = 0; i < newFetchedBlogs.length; i++){
+                            blogsArr.push(newFetchedBlogs[i])
+                        }
+                    }
                     setBlogs(blogsArr)
+                    // Store cached
+                    localStorage.setItem('fetched homepage', JSON.stringify(blogsArr))
+                    localStorage.setItem('last fetched', latestId)
+                    if(latestId > blogsArr.length - 1) setMoreButton("display")
                 }).catch((err)=>console.log(err))
             }
             fetchData()
             setFetch(true)
+        } else if (!isFetch){
+            // Get the cached data
+            const tempArrs = JSON.parse(localStorage.getItem('fetched homepage'))
+            const blogsArr = []
+            for(let i = 0; i < tempArrs.length; i++){ 
+                const blogData = tempArrs[i].props
+                blogsArr.push(<BlogWrapper
+                    href={blogData.href}
+                    src={blogData.src}
+                    topic={blogData.topic}
+                    content={blogData.content}
+                    key={i}
+                ></BlogWrapper>)
+            }
+            setBlogs(blogsArr)
+            setMoreButton("display")
         }
-    }, [isFetch])
-
+    }, [isFetch, loadEnd, loadFrom])
+    
     return(
         <div style={{"textAlign": "center"}}>
             <h1 style={{}}>Let's emerge and enjoy in music world today!</h1>
             <h2>Homepage</h2>
             <div className="homepage_button_wrapper">
-                <ExploreButton></ExploreButton>
+                <ExploreButton onClick={()=>console.log(1)}></ExploreButton>
                 <RandomPlaylistButton></RandomPlaylistButton>
                 <QuizButton></QuizButton>
             </div>
             <h2 style={{"margin": "25px 5px"}}>News</h2>
             {blogs}
+            <MoreButton className={`${moreButton}`} onClick={()=>{
+                localStorage.setItem('last fetched', null)
+                setLoadFrom(loadEnd + 1)
+                setLoadEnd(loadEnd + 3)
+                setFetch(false)
+            }}></MoreButton>
         </div>
     )
 }
