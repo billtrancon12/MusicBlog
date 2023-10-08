@@ -39,7 +39,6 @@ const Homepage = () =>{
                             key={i}
                         ></BlogWrapper>
                         blogsArr.push(blog)
-                        setBlogs(blogsArr)
                     }
                     setBlogs(blogsArr)
                 }).catch((err)=>console.log(err))
