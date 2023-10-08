@@ -28,7 +28,7 @@ export default function BlogEditor() {
         formData.append("topic", topic)
         formData.append("date", new Date())
         formData.append("content", editorRef.current.getContent())
-        await axios.post('/.netlify/functions/postBlog/upload', formData, {headers: {'Content-Type': 'multipart/form-data'}}).then((response) => {
+        await axios.post('/.netlify/functions/postBlog/upload/', formData, {headers: {'Content-Type': 'multipart/form-data'}}).then((response) => {
           const res = JSON.parse(response.data)
           if(res.status) {
             window.alert("Success!")
