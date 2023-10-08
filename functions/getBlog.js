@@ -14,8 +14,9 @@ require('dotenv').config();
 let headerImageName;
 
 const conn = mongoose.createConnection(`mongodb+srv://${process.env.db_username}:${process.env.db_password}@cluster0.liou3p7.mongodb.net/MusicBlogProject`)
-
 let gfs, gridfsBucket;
+let connected = false;
+
 conn.once('open', () => {
     // Init stream
     gfs = Grid(conn.db, mongoose.mongo);
@@ -80,10 +81,13 @@ router.get('/blog', async function(req, res){
     res.json(JSON.stringify({status: true, message: result}))
 })
 
+
 router.get('/images/', async function(req, res){
+    const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+    await delay(1000)
     const result = await gfs.files.findOne({ filename: req.query.filename })
-    // const readStream = gridfsBucket.openDownloadStream(result._id);
-    // readStream.pipe(res);
+    const readStream = gridfsBucket.openDownloadStream(result._id);
+    readStream.pipe(res);
 });
 
 app.use(`/.netlify/functions/getBlog`, router);

@@ -25,13 +25,13 @@ const Homepage = () =>{
                         const data = dataArr[i]
                         let imgData;
                     
-                        await axios.get(`http://localhost:4001/images/?filename=${data.image}`, {responseType: "arraybuffer"}).then((res)=>{
+                        await axios.get(`/.netlify/functions/getBlog/images/?filename=${data.image}`, {responseType: "arraybuffer"}).then((res)=>{
                             imgData = Buffer.from(res.data, 'binary').toString('base64')
                         }).catch((err)=>console.log(err))
 
                         const blog = 
                         <BlogWrapper
-                            href={`http://localhost:8888/blog/?topic=${data.topic}`}
+                            href={`/blog/?topic=${data.topic}`}
                             src={`data:image/png;base64,${imgData}`}
                             topic={data.topic}
                             content={data.content}
