@@ -74,6 +74,7 @@ const NavCustom = (props) => {
     <Nav className="home_nav">
       {props.menu}
       <div className="middle_nav">
+          <Link to="/admin" className={`rs-nav-item ${(props.chosenNav === "Admin") ? "menu_clicked" : ""}`} onClick={props.menuClickedHandler}>Admin</Link>
           <Link to="/playlist" className={`rs-nav-item ${(props.chosenNav === "Playlist") ? "menu_clicked" : ""}`} onClick={props.menuClickedHandler}>Playlist</Link>
           <Link to="/author" className={`rs-nav-item ${(props.chosenNav === "Authors") ? "menu_clicked" : ""}`} onClick={props.menuClickedHandler}>Authors</Link>
           <Link to="/song" className={`rs-nav-item ${(props.chosenNav === "Songs") ? "menu_clicked" : ""}`} onClick={props.menuClickedHandler}>Songs</Link>
