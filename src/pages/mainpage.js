@@ -46,7 +46,6 @@ const Homepage = () =>{
                         ></BlogWrapper>
                         blogsArr.push(blog)
                     }
-                    console.log(sessionStorage.getItem('fetched homepage'))
                     // Get the cached database 
                     if(sessionStorage.getItem('fetched homepage') !== null){
                         const tempArrs = JSON.parse(sessionStorage.getItem('fetched homepage'))
@@ -110,7 +109,6 @@ const Homepage = () =>{
             {blogs}
             <MoreButton className={`${moreButton}`} onClick={()=>{
                 const maxBlogs = sessionStorage.getItem('max blogs')
-                sessionStorage.setItem('last fetched', null)
                 setLoadFrom((loadFrom > maxBlogs) ? loadFrom :loadEnd + 1)
                 setLoadEnd((loadEnd > maxBlogs) ? loadEnd : loadEnd + 3)
                 setFetch(false)
