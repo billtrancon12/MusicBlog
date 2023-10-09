@@ -7,6 +7,7 @@ import { useLayoutEffect } from "react";
 
 function condenseText(text, maxLength){
     var tempText = text
+    if(tempText === undefined) return
     text = ""
     for(let i = 0; i < maxLength && i < tempText.length; i++){
         text += tempText[i]
@@ -39,6 +40,8 @@ const BlogWrapper = (props) =>{
 
             let tempArr = []
             let i = 0
+            // const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+            // await delay(100)
             Array.from(document.querySelectorAll(".summary_wrapper")).forEach((el)=>{
                 if(textArr[i] === undefined) {
                     tempArr.push(el.childNodes[0].innerHTML)
