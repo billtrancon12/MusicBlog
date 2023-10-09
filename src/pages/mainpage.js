@@ -14,14 +14,16 @@ const Homepage = () =>{
     const [blogs, setBlogs] = useState([])
     const [isFetch, setFetch] = useState(false)
     const [moreButton, setMoreButton] = useState("hide")
-    const [loadFrom, setLoadFrom] = useState(0)
-    const [loadEnd, setLoadEnd] = useState(2)
+    const [loadFrom, setLoadFrom] = useState((sessionStorage.getItem('load from') === null) ? 0 : parseInt(sessionStorage.getItem("load from"), 10))
+    const [loadEnd, setLoadEnd] = useState((sessionStorage.getItem("last fetched") === null) ? 2 : parseInt(sessionStorage.getItem("last fetched"), 10))
     useEffect(() => {
-        if(!isFetch && (sessionStorage.getItem('last fetched') === null || sessionStorage.getItem('last fetched') === 'null')){
+        sessionStorage.clear()
+        if(!isFetch){
             async function fetchData(){
                 await axios.get(`/.netlify/functions/getBlog/blogs/?rangeFrom=${loadFrom}&rangeEnd=${loadEnd}`).then(async (res)=>{
                     const response = JSON.parse(res.data)
                     let blogsArr = []
+                    if(response.body === "Empty") return
                     let dataArr = response.message.body.data
                     let latestId = response.message.body.latestId
 
@@ -68,8 +70,10 @@ const Homepage = () =>{
                     setBlogs(blogsArr)
                     // Store cached
                     sessionStorage.setItem('fetched homepage', JSON.stringify(blogsArr))
-                    sessionStorage.setItem('last fetched', latestId)
+                    sessionStorage.setItem('last fetched', loadEnd)
+                    sessionStorage.setItem('load from', loadFrom)
                     if(latestId > blogsArr.length - 1) setMoreButton("display")
+                    else setMoreButton("hide")
                 }).catch((err)=>console.log(err))
             }
             fetchData()
@@ -105,9 +109,10 @@ const Homepage = () =>{
             <h2 style={{"margin": "25px 5px"}}>News</h2>
             {blogs}
             <MoreButton className={`${moreButton}`} onClick={()=>{
+                const maxBlogs = sessionStorage.getItem('max blogs')
                 sessionStorage.setItem('last fetched', null)
-                setLoadFrom(loadEnd + 1)
-                setLoadEnd(loadEnd + 3)
+                setLoadFrom((loadFrom > maxBlogs) ? loadFrom :loadEnd + 1)
+                setLoadEnd((loadEnd > maxBlogs) ? loadEnd : loadEnd + 3)
                 setFetch(false)
             }}></MoreButton>
         </div>

@@ -85,7 +85,10 @@ async function getBlogs(rangeFrom, rangeEnd){
 
 router.get('/blogs', async function(req, res){
     const result = await getBlogs(parseInt(req.query.rangeFrom, 10), parseInt(req.query.rangeEnd, 10))
-    res.json(JSON.stringify({status: true, message: result}))
+    if(req.query.rangeFrom <= result.body.latestId)
+        res.json(JSON.stringify({status: true, message: result}))
+    else
+        res.json(JSON.stringify({status: true, body: "Empty"}))
 })
 
 router.get('/blog', async function(req, res){
@@ -96,7 +99,7 @@ router.get('/blog', async function(req, res){
 
 router.get('/images/', async function(req, res){
     const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
-    await delay(1000)
+    await delay(1500)
     const result = await gfs.files.findOne({ filename: req.query.filename })
     const readStream = await gridfsBucket.openDownloadStream(result._id);
     // readStream.pipe(res);
