@@ -18,7 +18,7 @@ const Homepage = () =>{
     const [loadEnd, setLoadEnd] = useState((sessionStorage.getItem("last fetched") === null) ? 2 : parseInt(sessionStorage.getItem("last fetched"), 10))
     useEffect(() => {
         // sessionStorage.clear()
-        if(!isFetch){
+        if(!isFetch && sessionStorage.getItem("fetched homepage") === null){
             async function fetchData(){
                 await axios.get(`/.netlify/functions/getBlog/blogs/?rangeFrom=${loadFrom}&rangeEnd=${loadEnd}`).then(async (res)=>{
                     const response = JSON.parse(res.data)
@@ -71,6 +71,7 @@ const Homepage = () =>{
                     sessionStorage.setItem('fetched homepage', JSON.stringify(blogsArr))
                     sessionStorage.setItem('last fetched', loadEnd)
                     sessionStorage.setItem('load from', loadFrom)
+                    sessionStorage.setItem('max blogs', latestId)
                     if(latestId > blogsArr.length - 1) setMoreButton("display")
                     else setMoreButton("hide")
                 }).catch((err)=>console.log(err))
@@ -92,7 +93,9 @@ const Homepage = () =>{
                 ></BlogWrapper>)
             }
             setBlogs(blogsArr)
-            setMoreButton("display")
+            const maxBlogs = (sessionStorage.getItem('max blogs') === null) ? 0 : parseInt(sessionStorage.getItem('max blogs'))
+            if(maxBlogs <= blogsArr.length - 1) setMoreButton("display")
+            else setMoreButton('hide')
         }
     }, [isFetch, loadEnd, loadFrom])
     
