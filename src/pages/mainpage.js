@@ -95,7 +95,7 @@ const Homepage = () =>{
             }
             setBlogs(blogsArr)
             const maxBlogs = (sessionStorage.getItem('max blogs') === null) ? 0 : parseInt(sessionStorage.getItem('max blogs'))
-            if(maxBlogs <= blogsArr.length - 1) setMoreButton("display")
+            if(maxBlogs >= blogsArr.length - 1) setMoreButton("display")
             else setMoreButton('hide')
         }
     }, [isFetch, loadEnd, loadFrom])
