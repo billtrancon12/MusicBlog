@@ -17,7 +17,7 @@ const Homepage = () =>{
     const [loadFrom, setLoadFrom] = useState((sessionStorage.getItem('load from') === null) ? 0 : parseInt(sessionStorage.getItem("load from"), 10))
     const [loadEnd, setLoadEnd] = useState((sessionStorage.getItem("last fetched") === null) ? 2 : parseInt(sessionStorage.getItem("last fetched"), 10))
     useEffect(() => {
-        sessionStorage.clear()
+        // sessionStorage.clear()
         if(!isFetch){
             async function fetchData(){
                 await axios.get(`/.netlify/functions/getBlog/blogs/?rangeFrom=${loadFrom}&rangeEnd=${loadEnd}`).then(async (res)=>{
