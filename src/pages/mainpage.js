@@ -17,8 +17,7 @@ const Homepage = () =>{
     const [loadFrom, setLoadFrom] = useState(0)
     const [loadEnd, setLoadEnd] = useState(2)
     useEffect(() => {
-        localStorage.clear()
-        if(!isFetch && (localStorage.getItem('last fetched') === null || localStorage.getItem('last fetched') === 'null')){
+        if(!isFetch && (sessionStorage.getItem('last fetched') === null || sessionStorage.getItem('last fetched') === 'null')){
             async function fetchData(){
                 await axios.get(`/.netlify/functions/getBlog/blogs/?rangeFrom=${loadFrom}&rangeEnd=${loadEnd}`).then(async (res)=>{
                     const response = JSON.parse(res.data)
@@ -45,10 +44,10 @@ const Homepage = () =>{
                         ></BlogWrapper>
                         blogsArr.push(blog)
                     }
-                    console.log(localStorage.getItem('fetched homepage'))
+                    console.log(sessionStorage.getItem('fetched homepage'))
                     // Get the cached database 
-                    if(localStorage.getItem('fetched homepage') !== null){
-                        const tempArrs = JSON.parse(localStorage.getItem('fetched homepage'))
+                    if(sessionStorage.getItem('fetched homepage') !== null){
+                        const tempArrs = JSON.parse(sessionStorage.getItem('fetched homepage'))
                         const newFetchedBlogs = blogsArr
                         blogsArr = []
                         for(let i = 0; i < tempArrs.length; i++){ 
@@ -68,8 +67,8 @@ const Homepage = () =>{
                     }
                     setBlogs(blogsArr)
                     // Store cached
-                    localStorage.setItem('fetched homepage', JSON.stringify(blogsArr))
-                    localStorage.setItem('last fetched', latestId)
+                    sessionStorage.setItem('fetched homepage', JSON.stringify(blogsArr))
+                    sessionStorage.setItem('last fetched', latestId)
                     if(latestId > blogsArr.length - 1) setMoreButton("display")
                 }).catch((err)=>console.log(err))
             }
@@ -77,7 +76,7 @@ const Homepage = () =>{
             setFetch(true)
         } else if (!isFetch){
             // Get the cached data
-            const tempArrs = JSON.parse(localStorage.getItem('fetched homepage'))
+            const tempArrs = JSON.parse(sessionStorage.getItem('fetched homepage'))
             const blogsArr = []
             for(let i = 0; i < tempArrs.length; i++){ 
                 const blogData = tempArrs[i].props
@@ -106,7 +105,7 @@ const Homepage = () =>{
             <h2 style={{"margin": "25px 5px"}}>News</h2>
             {blogs}
             <MoreButton className={`${moreButton}`} onClick={()=>{
-                localStorage.setItem('last fetched', null)
+                sessionStorage.setItem('last fetched', null)
                 setLoadFrom(loadEnd + 1)
                 setLoadEnd(loadEnd + 3)
                 setFetch(false)
