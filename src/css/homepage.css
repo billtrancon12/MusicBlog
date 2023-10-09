@@ -16,3 +16,11 @@
         display: block;
     }
 }
+
+.hide{
+    display: none;
+}
+
+.display{
+    display: inline;
+}

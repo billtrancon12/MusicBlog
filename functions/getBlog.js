@@ -55,15 +55,27 @@ async function getBlogBasedOnTopic(topic){
     }
 }
 
-async function getBlogs(){
+async function getBlogs(rangeFrom, rangeEnd){
     const uri = `mongodb+srv://${process.env.db_username}:${process.env.db_password}@cluster0.liou3p7.mongodb.net/?retryWrites=true&w=majority`
     const client = new MongoClient(uri);   // Create a client end-point
     
     try{
         await client.connect();
-        const result = await retrieveMultiData(client, "MusicBlogProject", "BlogContent"); 
+        const arr = [];
+        for(let i = rangeFrom; i <= rangeEnd; i++){
+            arr.push(i)
+        }
+        const result = await retrieveMultiData(client, "MusicBlogProject", "BlogContent", {"id": {"$in": arr}});
+        const latestId = await retrieveData(client, "MusicBlogProject", "NumberBlogs");
+        const resultData = JSON.parse(result.body)
+        const latestIdData = JSON.parse(latestId.body)
+        const multiData = {
+            data: resultData,
+            latestId: latestIdData.latestId
+        }
+        // console.log(JSON.parse(latestId.body).latestId)
         await client.close();
-        return JSON.parse(JSON.stringify({status: true, body: result.body, message: "Success!"}));
+        return JSON.parse(JSON.stringify({status: true, body: multiData, message: "Success!"}));
     }
     catch(err){
         console.error(err);
@@ -72,7 +84,7 @@ async function getBlogs(){
 }
 
 router.get('/blogs', async function(req, res){
-    const result = await getBlogs()
+    const result = await getBlogs(parseInt(req.query.rangeFrom, 10), parseInt(req.query.rangeEnd, 10))
     res.json(JSON.stringify({status: true, message: result}))
 })
 

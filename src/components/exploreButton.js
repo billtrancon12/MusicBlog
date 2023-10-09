@@ -1,6 +1,6 @@
 import React from "react";
 
-const ExploreButton = () =>{
+const ExploreButton = (props) =>{
 
     return(
         <React.StrictMode>
@@ -10,7 +10,9 @@ const ExploreButton = () =>{
                 "boxShadow": "0px 4px 4px 0 rgba(0,0,0,.25)",
                 "minWidth": "150px",
                 "maxWidth": "200px",
-                "padding": "10px 20px"}}>Explore!</button>
+                "padding": "10px 20px"}
+            }
+            onClick={props.onClick}>Explore!</button>
         </React.StrictMode>
     )
 }
