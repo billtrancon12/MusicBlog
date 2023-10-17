@@ -5,33 +5,32 @@ import { useEffect } from "react";
 import LoadingPage from "../pages/loading";
 import "../css/blogPage.css"
 
-async function fetchData(href){
-    let ret;
-    await axios.get(href).then((response) => {
-        const res = JSON.parse(response.data)
-        const blogData = JSON.parse(res.body)
-        ret = {
-            image: res.image,
-            topic: blogData.topic,
-            content: blogData.content,
-        }
-    }).catch((err) => console.log(err))
-    return ret;
-}
-
 
 const BlogPage = () => {
     const [isFetched, setFetched] = useState(false)
     const [blogData, setBlogData] = useState(null)
 
-    useEffect(()=> async function(){
+    useEffect(()=>{
         const blogTopic = window.location.href.split('/')[4]
         if(!isFetched && sessionStorage.getItem("blog " + blogTopic) === null){
-            const data = await fetchData(`/.netlify/functions/getBlog/blog/?topic=${blogTopic}`)
-            // Save cached data
-            sessionStorage.setItem("blog " + blogTopic, JSON.stringify(data)) 
-            setBlogData(data)
-            setFetched(true)        
+            async function fetchData(href){
+                let ret;
+                await axios.get(href).then((response) => {
+                    const res = JSON.parse(response.data)
+                    const blogData = JSON.parse(res.body)
+                    ret = {
+                        image: res.image,
+                        topic: blogData.topic,
+                        content: blogData.content,
+                    }
+                    setBlogData(ret)
+                    setFetched(true)
+                    // Save cached data
+                    sessionStorage.setItem("blog " + blogTopic, JSON.stringify(ret)) 
+                }).catch((err) => console.log(err))
+                return ret;
+            }
+            fetchData(`/.netlify/functions/getBlog/blog/?topic=${blogTopic}`)     
         }
         // Get the cached data
         else if(!isFetched){
