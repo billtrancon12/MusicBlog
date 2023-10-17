@@ -92,8 +92,22 @@ router.get('/blogs', async function(req, res){
 })
 
 router.get('/blog', async function(req, res){
-    const result = await getBlogBasedOnTopic(req.query.topic)
-    res.json(JSON.stringify({status: true, message: result}))
+    const result = await getBlogBasedOnTopic(req.query.topic) // Get the blog
+    const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+    await delay(1500)
+    const image_filename = JSON.parse(result.body).image
+    const resultImage = await gfs.files.findOne({ filename: image_filename})
+    const readStream = await gridfsBucket.openDownloadStream(resultImage._id);
+    const bufs = [];
+    readStream.on('data', function (chunk) {
+        bufs.push(chunk);
+    });
+    readStream.on('end', function () {
+        const fbuf = Buffer.concat(bufs);
+        const base64 = fbuf.toString('base64');
+        res.json(JSON.stringify({status: true, image: base64, body: result.body}))
+    });
+    // res.json(JSON.stringify({status: true, message: result}))
 })
 
 

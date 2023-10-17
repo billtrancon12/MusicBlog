@@ -38,33 +38,13 @@ const Homepage = () =>{
 
                         const blog = 
                         <BlogWrapper
-                            href={`/blog/?topic=${data.topic}`}
+                            href={`/blog/${data.topic}`}
                             src={`data:image/png;base64,${imgData}`}
                             topic={data.topic}
                             content={data.content}
                             key={i}
                         ></BlogWrapper>
                         blogsArr.push(blog)
-                    }
-                    // Get the cached database 
-                    if(sessionStorage.getItem('fetched homepage') !== null){
-                        const tempArrs = JSON.parse(sessionStorage.getItem('fetched homepage'))
-                        const newFetchedBlogs = blogsArr
-                        blogsArr = []
-                        for(let i = 0; i < tempArrs.length; i++){ 
-                            const blogData = tempArrs[i].props
-                            blogsArr.push(<BlogWrapper
-                                href={blogData.href}
-                                src={blogData.src}
-                                topic={blogData.topic}
-                                content={blogData.content}
-                                key={i}
-                        ></BlogWrapper>)
-                        }
-                        console.log(blogsArr)
-                        for(let i = 0; i < newFetchedBlogs.length; i++){
-                            blogsArr.push(newFetchedBlogs[i])
-                        }
                     }
                     setBlogs(blogsArr)
                     // Store cached

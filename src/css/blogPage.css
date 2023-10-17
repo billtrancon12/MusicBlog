@@ -1,0 +1,15 @@
+.blog_page_image_header_wrapper{
+    width: 100%;
+    margin: 15px 10px 0px;
+    text-align: center;
+}
+.blog_page_content_wrapper{
+    margin: 5px 10px;
+    text-align: center;
+}
+
+.blog_header_img{
+    position: relative;
+    width: 80%;
+    max-width: 400px;
+}
