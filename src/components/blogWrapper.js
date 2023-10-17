@@ -19,7 +19,8 @@ function condenseText(text, maxLength){
 
 const BlogWrapper = (props) =>{
     const [isCondense, setCondense] = useState(false)
-    const [textArr, setTextArr] = useState([])
+    const [condensedText, setCondensedText] = useState("")
+
     useLayoutEffect(()=>{
         function handleResize(){
             setCondense(false)
@@ -38,22 +39,13 @@ const BlogWrapper = (props) =>{
             else if(width >= 500) maxLength = width * 0.2
             else maxLength = width * 0.3;
 
-            let tempArr = []
-            let i = 0
-            // const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
-            // await delay(100)
-            Array.from(document.querySelectorAll(".summary_wrapper")).forEach((el)=>{
-                if(textArr[i] === undefined) {
-                    tempArr.push(el.childNodes[0].innerHTML)
-                    setTextArr(tempArr)
-                }
-                var tempText = (textArr[i] === undefined) ? tempArr[i] : textArr[i]
-                el.childNodes[0].innerHTML = condenseText(tempText, maxLength)
-                i++;
-            })
+            let condensed = condenseText(props.content, maxLength)
+            if(condensed.substring(condensed.length - 4, condensed.length) !== "</p>")
+                condensed += "</p>"
+            setCondensedText(condensed)
             setCondense(true)
         }
-    }, [isCondense, textArr])
+    }, [condensedText, isCondense, props.content])
     return(
         <React.StrictMode>
             <div className="blog_wrapper">
@@ -63,7 +55,7 @@ const BlogWrapper = (props) =>{
                     </div>
                     <div className="blog_content">
                         <h3 className="topic">{props.topic}</h3>
-                        <div dangerouslySetInnerHTML={{"__html": props.content}} className="summary_wrapper"></div>
+                        <div dangerouslySetInnerHTML={{"__html": `${condensedText}`}} className="summary_wrapper"></div>
                     </div>
                 </Link>
             </div>

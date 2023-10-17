@@ -20,11 +20,6 @@ root.render(
   <React.StrictMode>
     <Router>
       <Routes>
-        {/* <Route path='/' exact element={<Homepage></Homepage>}></Route> */}
-        {/* <Route path='/playlist' exact element={<Playlist></Playlist>}></Route>
-        <Route path='/authors' exact element={<AuthorPage></AuthorPage>}></Route>
-        <Route path='/song' exact element={<SongPage></SongPage>}></Route>
-        <Route path='/top100' exact element={<Top100></Top100>}></Route> */}
         <Route path='/*' exact element={<App></App>}>
         </Route>
       </Routes>

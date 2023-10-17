@@ -8,6 +8,7 @@ import Top100 from "./pages/top100";
 import NotFound from "./pages/notfound";
 import { Routes, Route} from 'react-router-dom';
 import BlogEditor from "./pages/blogEditor";
+import BlogPage from "./components/blogPages";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Route path='/song' element={<SongPage></SongPage>}></Route>
         <Route path='/top100' element={<Top100></Top100>}></Route>
         <Route path="/admin" element={<BlogEditor></BlogEditor>}></Route>
+        <Route path="/blog/:topic" element={<BlogPage></BlogPage>}></Route>
         <Route path='/*' element={<NotFound></NotFound>}></Route>
       </Routes>
     </React.Fragment>
