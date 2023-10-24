@@ -2,7 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useState } from "react";
 import { useEffect } from "react";
-import LoadingPage from "../pages/loading";
+import LoadingPage from "./loading";
 import "../css/blogPage.css"
 
 

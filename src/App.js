@@ -8,7 +8,8 @@ import Top100 from "./pages/top100";
 import NotFound from "./pages/notfound";
 import { Routes, Route} from 'react-router-dom';
 import BlogEditor from "./pages/blogEditor";
-import BlogPage from "./components/blogPages";
+import BlogPage from "./pages/blogPages";
+import SongSearchPage from "./pages/songSearch";
 
 
 function App() {
@@ -19,7 +20,10 @@ function App() {
         <Route path='/' element={<Homepage></Homepage>}></Route>
         <Route path='/playlist' element={<Playlist></Playlist>}></Route>
         <Route path='/author' element={<AuthorPage></AuthorPage>}></Route>
-        <Route path='/song' element={<SongPage></SongPage>}></Route>
+        <Route path='/song'>
+          <Route path="/song" element={<SongSearchPage></SongSearchPage>}></Route>
+          <Route path=":songName/:authorName" element={<SongPage></SongPage>}></Route>
+        </Route>
         <Route path='/top100' element={<Top100></Top100>}></Route>
         <Route path="/admin" element={<BlogEditor></BlogEditor>}></Route>
         <Route path="/blog/:topic" element={<BlogPage></BlogPage>}></Route>

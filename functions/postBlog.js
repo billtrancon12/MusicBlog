@@ -94,12 +94,16 @@ async function putBlog(topic, headerImageName, date, content){
     
     try{
         await client.connect();
+        const blogIDResult = await retrieveData(client, "MusicBlogProject", "NumberBlogs")
+        const blogID = JSON.parse(blogIDResult.body).latestID
+        console.log(blogIDResult.body)
         const result = await updateData(client, "MusicBlogProject", "BlogContent", {topic: topic},
         {$set: {
             topic: topic,
             image: headerImageName,
             date: date,
-            content: content
+            content: content,
+            id: blogID + 1
         }}, {upsert: true}); // Put user into the database
 
         await client.close();
@@ -111,24 +115,24 @@ async function putBlog(topic, headerImageName, date, content){
     }
 }
 
-async function putFile(path){
-    const uri = `mongodb+srv://${process.env.db_username}:${process.env.db_password}@cluster0.liou3p7.mongodb.net/?retryWrites=true&w=majority`
-    const client = new MongoClient(uri);   // Create a client end-point
+// async function putFile(path){
+//     const uri = `mongodb+srv://${process.env.db_username}:${process.env.db_password}@cluster0.liou3p7.mongodb.net/?retryWrites=true&w=majority`
+//     const client = new MongoClient(uri);   // Create a client end-point
     
-    try{
-        await client.connect();
-        const db = client.db("MusicBlogProject")
-        const bucket = new GridFSBucket(db, {bucketName: "myCustomBucket"})
+//     try{
+//         await client.connect();
+//         const db = client.db("MusicBlogProject")
+//         const bucket = new GridFSBucket(db, {bucketName: "myCustomBucket"})
 
-        const readStream = fs.createReadStream(path).pipe(bucket.openUploadStream(path))
-        await client.close();
-        return JSON.parse(JSON.stringify({status: true, message: "Success!"}));
-    }
-    catch(err){
-        console.error(err);
-        return undefined;
-    }
-}
+//         const readStream = fs.createReadStream(path).pipe(bucket.openUploadStream(path))
+//         await client.close();
+//         return JSON.parse(JSON.stringify({status: true, message: "Success!"}));
+//     }
+//     catch(err){
+//         console.error(err);
+//         return undefined;
+//     }
+// }
 
 router.post('/check', async function(req, res){
     if(req.body.topic === ""){
