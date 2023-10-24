@@ -38,13 +38,13 @@ const SongPage = () =>{
                         setSongURL(song.videoId)
                     }
                 })
-                console.log(response)
             }).catch(err => console.log(err))
             setFetchSong(true)
         }
         async function getSongLyrics(songName, authorName){
             await axios.get(`/.netlify/functions/ytmusic_api/lyrics/?songName=${songName}&authorName=${authorName}`).then(res =>{
                 const response = JSON.parse(res.data)
+                console.log(response)
                 if(response.status === 200){
                     const responseData = JSON.parse(response.body)
                     const lyrics = responseData.lyrics.lines;
