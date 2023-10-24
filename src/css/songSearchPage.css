@@ -1,0 +1,11 @@
+.search_bar_wrapper > input{
+    width: 50%;
+    max-width: 330px;
+}
+
+.search_bar_wrapper{
+    margin: 15px 0px 10px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+}

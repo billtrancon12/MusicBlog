@@ -1,0 +1,17 @@
+.song_wrapper{
+    width: 100%;
+}
+
+.lyrics_wrapper{
+    width: 80%;
+    position: relative;
+    margin: auto;
+}
+
+.lyrics_wrapper > p, h2{
+    text-align: center;
+}
+
+.lyrics_wrapper > p{
+    font-size: 20px;
+}

@@ -7,6 +7,7 @@ const {updateData, retrieveData} = require('./database_tools');
 const multer = require('multer')
 const router = express.Router()
 const {GridFsStorage} = require('multer-gridfs-storage');
+const serverless = require('serverless-http')
 const Grid = require('gridfs-stream');
 const fs = require('fs')
 const path = require('path');
@@ -93,14 +94,17 @@ async function putBlog(topic, headerImageName, date, content){
     
     try{
         await client.connect();
+        const blogIDResult = await retrieveData(client, "MusicBlogProject", "NumberBlogs")
+        const blogID = JSON.parse(blogIDResult.body).latestId
         const result = await updateData(client, "MusicBlogProject", "BlogContent", {topic: topic},
         {$set: {
             topic: topic,
             image: headerImageName,
             date: date,
-            content: content
+            content: content,
+            id: blogID + 1
         }}, {upsert: true}); // Put user into the database
-
+        await updateData(client, "MusicBlogProject", "NumberBlogs", {}, {$set: {latestId: blogID + 1}}, {upsert: true})
         await client.close();
         return JSON.parse(JSON.stringify({status: true, body: result.body, message: "Success!"}));
     }
@@ -110,26 +114,26 @@ async function putBlog(topic, headerImageName, date, content){
     }
 }
 
-async function putFile(path){
-    const uri = `mongodb+srv://${process.env.db_username}:${process.env.db_password}@cluster0.liou3p7.mongodb.net/?retryWrites=true&w=majority`
-    const client = new MongoClient(uri);   // Create a client end-point
+// async function putFile(path){
+//     const uri = `mongodb+srv://${process.env.db_username}:${process.env.db_password}@cluster0.liou3p7.mongodb.net/?retryWrites=true&w=majority`
+//     const client = new MongoClient(uri);   // Create a client end-point
     
-    try{
-        await client.connect();
-        const db = client.db("MusicBlogProject")
-        const bucket = new GridFSBucket(db, {bucketName: "myCustomBucket"})
+//     try{
+//         await client.connect();
+//         const db = client.db("MusicBlogProject")
+//         const bucket = new GridFSBucket(db, {bucketName: "myCustomBucket"})
 
-        const readStream = fs.createReadStream(path).pipe(bucket.openUploadStream(path))
-        await client.close();
-        return JSON.parse(JSON.stringify({status: true, message: "Success!"}));
-    }
-    catch(err){
-        console.error(err);
-        return undefined;
-    }
-}
+//         const readStream = fs.createReadStream(path).pipe(bucket.openUploadStream(path))
+//         await client.close();
+//         return JSON.parse(JSON.stringify({status: true, message: "Success!"}));
+//     }
+//     catch(err){
+//         console.error(err);
+//         return undefined;
+//     }
+// }
 
-router.post('/check', async function(req, res){
+app.post('/check', async function(req, res){
     if(req.body.topic === ""){
         res.json(JSON.stringify({status: false, message: "Topic cannot be empty!"}))
         return
@@ -147,7 +151,7 @@ router.post('/check', async function(req, res){
     res.json(JSON.stringify({status: true, message: "Success!"}))
 })
 
-router.post('/upload', upload.single('file_input'), async function(req, res){
+app.post('/upload', upload.single('file_input'), async function(req, res){
     result = await putBlog(req.body.topic, headerImageName, req.body.date, req.body.content)
 
     if(result === undefined || result === null){
@@ -157,14 +161,16 @@ router.post('/upload', upload.single('file_input'), async function(req, res){
     res.json(JSON.stringify({status: true, message: "Success"}));
 })
 
-router.get('/files/', async function(req, res){
-    const result = await gfs.files.findOne({ filename: req.query.filename })
-    const readStream = gridfsBucket.openDownloadStream(result._id);
-    readStream.pipe(res);
-});
+// router.get('/files/', async function(req, res){
+//     const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
+//     await delay(1000)
+//     const result = await gfs.files.findOne({ filename: req.query.filename })
+//     const readStream = gridfsBucket.openDownloadStream(result._id);
+//     readStream.pipe(res);
+// });
 
-app.use(`/.netlify/express/postBlog`, router);
+// app.use(`/.netlify/functions/postBlog`, router);
 
-module.exports = app;
-module.exports.handler = serverless(app);
-// app.listen(4000);
+// module.exports = app;
+// module.exports.handler = serverless(app);
+app.listen(4000);

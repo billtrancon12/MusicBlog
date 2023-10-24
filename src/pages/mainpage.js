@@ -46,7 +46,7 @@ const Homepage = () =>{
                         ></BlogWrapper>
                         blogsArr.push(blog)
                     }
-                    // Get the cached database 
+                    // Get the cached database saved from previous fetched
                     if(sessionStorage.getItem('fetched homepage') !== null){
                         const tempArrs = JSON.parse(sessionStorage.getItem('fetched homepage'))
                         const newFetchedBlogs = blogsArr

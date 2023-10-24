@@ -11,11 +11,8 @@ const methodOverride = require('method-override');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
-let headerImageName;
-
 const conn = mongoose.createConnection(`mongodb+srv://${process.env.db_username}:${process.env.db_password}@cluster0.liou3p7.mongodb.net/MusicBlogProject`)
 let gfs, gridfsBucket;
-let connected = false;
 
 conn.once('open', () => {
     // Init stream
