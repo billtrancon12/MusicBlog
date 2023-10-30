@@ -1,11 +1,11 @@
 import React from "react";
 
-const AuthorPage = () =>{
+const ArtistPage = () =>{
     return (
         <div style={{"textAlign": "center"}}>
-            Author
+            Artist
         </div>
     )
 }
 
-export default AuthorPage;
+export default ArtistPage;

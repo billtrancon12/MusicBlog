@@ -7,7 +7,6 @@ import BlogWrapper from "../components/blogWrapper";
 import { useState } from "react";
 import axios from "axios";
 import "../css/homepage.css"
-import '../css/media.css'
 import MoreButton from "../components/moreButton";
 
 const Homepage = () =>{

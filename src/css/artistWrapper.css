@@ -1,0 +1,33 @@
+.artist_wrapper{
+    width: 100%;
+    margin: 12px 0px 5px 15px;
+}
+
+.artist_link_wrapper{
+    width: 30%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-radius: 50px;
+}
+
+.artist_link_wrapper:hover{
+    background-color: #FAEBD7;
+}
+
+.artist_thumbnail_wrapper{
+    margin-right: 10px;   
+}
+
+.artist_thumbnail{
+    border-radius: 100%;
+}
+
+.artist_name_wrapper{
+    margin: 0px 5px 2px 5px;
+}
+
+.artist_name{
+    font-size: large;
+    font-weight: 600;
+}
