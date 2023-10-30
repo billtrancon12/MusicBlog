@@ -28,6 +28,24 @@ router.get('/song', async function(req, res){
     res.json(JSON.stringify({status: 200, body: result}))   
 })
 
+router.get("/artist", async function(req, res){
+    const ytmusic = await new YTMusic().initialize()
+    let result;
+    await ytmusic.searchArtists(decodeURI(req.query.name)).then(artist =>{
+        result = artist
+    }).catch(err => console.log(err))
+    res.json(JSON.stringify({status: 200, body: result}))
+})
+
+router.get("/relatedSong", async function(req, res){
+    const ytmusic = await new YTMusic().initialize()
+    let result;
+    await ytmusic.getArtist(decodeURI(req.query.name)).then(artist =>{
+        result = artist.topSongs
+    }).catch(err => console.log(err))
+    res.json(JSON.stringify({status: 200, body: result}))
+})
+
 router.get('/lyrics', async function(req, res){
     const tracksOptions = {
         method: 'GET',
@@ -49,6 +67,7 @@ router.get('/lyrics', async function(req, res){
         const response = await axios.request(tracksOptions);
         const songItems = response.data.tracks.items;
         let songID = "";
+        let found = false;
         songItems.forEach(item =>{
             const artists = item.data.artists.items
             let artistName = "";
@@ -57,11 +76,12 @@ router.get('/lyrics', async function(req, res){
                     artistName = artist.profile.name
             })
             
-            if(decodeURI(item.data.name).toLowerCase() === decodeURI(req.query.songName).toLowerCase() && decodeURI(req.query.authorName).toLowerCase() === decodeURI(artistName).toLowerCase())
+            if(decodeURI(item.data.name).toLowerCase() === decodeURI(req.query.songName).toLowerCase() && decodeURI(req.query.authorName).toLowerCase() === decodeURI(artistName).toLowerCase()){
                 songID = item.data.id
-            else if(decodeURI(item.data.name).toLowerCase() === decodeURI(req.query.songName).toLowerCase())
-                songID = item.data.id
-            console.log(item)
+                found = true;
+            }
+            // else if(!found && decodeURI(item.data.name).toLowerCase() === decodeURI(req.query.songName).toLowerCase())
+            //     songID = item.data.id
         })
         if(songID === "") songID = songItems[0].data.id
         try{

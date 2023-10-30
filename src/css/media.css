@@ -3,6 +3,18 @@
     .middle_nav{
         width: 75%;
     }
+    .song_search_nav_container{
+        width: 65%;
+    }
+    .song_search_nav_item_name{
+        width: 45%;
+    }
+    .song_search_nav_item_artist{
+        width: 35%;
+    }
+    .artist_link_wrapper{
+        width: 50%;
+    }
 }
 
 /*This is for the tablet*/
@@ -25,6 +37,26 @@
         height: 100%;
         max-height: 250px;
         max-width: 400px;
+    }
+    .song_search_nav_container{
+        width: 70%;
+    }
+
+    .song_search_nav_item_duration{
+        visibility: hidden;
+    }
+    .song_search_nav_item_name{
+        width: 60%;
+    }
+    .song_search_nav_item_artist{
+        width: 20%;
+    }
+    .song_search_nav_item{
+        transform: none;
+    }
+
+    .artist_link_wrapper{
+        width: 50%;
     }
 }
 
@@ -58,5 +90,26 @@
         position: relative;
         width: 80%;
         margin: auto;
+    }
+    .song_search_nav_container{
+        width: 80%;
+    }
+
+    .song_search_nav_item_duration{
+        visibility: hidden;
+    }
+    .song_search_nav_item_name{
+        width: 60%;
+    }
+    .song_search_nav_item_artist{
+        width: 20%;
+    }
+
+    .song_search_nav_item{
+        transform: none;
+    }
+
+    .artist_link_wrapper{
+        width: 60%;
     }
 }
