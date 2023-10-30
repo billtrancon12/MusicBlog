@@ -124,7 +124,7 @@ const RelatedSongWrapper = (props) =>{
     return(
         <div className="related_song_wrapper">
             <div className="related_song_heading_wrapper">
-                <h3 className="related_song_heading">You may also like... ({relatedSongs.length})</h3>
+                <h3 className="related_song_heading">You may also like... ({(relatedSongs !== null) ? relatedSongs.length : 0})</h3>
             </div>
             <div className="related_song_content_wrapper">
                 <ul className="related_song_list">
