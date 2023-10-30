@@ -98,9 +98,9 @@ const SongPage = () =>{
             setFetchArtist(true)
         }
 
-        if(!isFetchedSong && !isFetchedArtist){
+        if(!isFetchedSong && !isFetchedArtist && !isFetchedLyrics){
             getSongURL(songNameAfterParse + " " + authorNameAfterParse)
-            // getSongLyrics(songNameAfterParse, authorNameAfterParse)
+            getSongLyrics(songNameAfterParse, authorNameAfterParse)
             getArtist(authorNameAfterParse)
         }
     }, [lyrics, songURL, isFetchedSong, isFetchedLyrics, isFetchedArtist, songName, authorName])
@@ -121,7 +121,7 @@ const SongPage = () =>{
         return () => window.removeEventListener('resize', handleResize)
     }, [videoSize])
 
-    if(isFetchedSong && isFetchedArtist){
+    if(isFetchedSong && isFetchedArtist && isFetchedLyrics){
         return (
             <div className="song_wrapper">
                 <h3 className="song_title">{song_name}</h3>
