@@ -1,0 +1,32 @@
+.artist_page_wrapper{
+    width: 100%;
+}
+
+.artist_page_content{
+    width: 95%;
+    position: relative;
+    margin: auto;
+}
+
+.artist_page_thumbnail_wrapper{
+    width: 100%;
+    position: relative;
+    text-align: center;
+    margin-top: 10px
+}
+
+.artist_page_thumbnail{
+    width: 100%;
+    position: relative;
+}
+
+.artist_page_bio_wrapper{
+    margin: 0px 10px 0px;
+    font-size: 18px;
+}
+
+.artist_page_name{
+    font-size: 20px;
+}
+
+

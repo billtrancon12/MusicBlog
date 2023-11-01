@@ -1,0 +1,56 @@
+.top100_song_wrapper{
+    width: 100%;
+}
+
+.top100_song_list{
+    width: 90%;
+    position: relative;
+    padding: 0;
+    list-style: none;
+    margin: auto;
+}
+
+.top100_item{
+    width: 60%;
+    margin: auto;
+    position: relative;
+    box-shadow:rgba(22, 31, 39, 0.42) 0px 45px 30px -45px;    
+    border-radius: 10px;
+    border: 1px solid;
+    border-color:rgb(213, 220, 226);
+    transform:
+        perspective(1200px)
+        translate3d(0px, 0px, -250px)
+        rotateX(10deg);
+    transition: 0.4s ease-in-out transform;
+    max-width: 750px;
+}
+
+.top100_item:hover{
+    transform: translate3d(0px, 0px, -250px);
+}
+
+.top100_item > a{
+    text-decoration: none;
+}
+
+.top100_song_wrapper{
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.top100_song_rank_wrapper{
+    margin: 20px 20px 20px 20px;
+}
+
+.top100_song_rank{
+    color: black;
+    font-size: 20px;
+}
+
+.top100_song_name_wrapper{
+    margin: 0px 10px 0px 10px;
+    color: black;
+    font-size: 20px;
+}

@@ -42,7 +42,6 @@ const RelatedSongWrapper = (props) =>{
     useEffect(()=>{
         function handleSwipe(){
             // Swipe right
-            console.log(yStart.current)
             if(Math.abs(yStart.current - yEnd.current) < 100 && xStart.current - xEnd.current < 0 && !isTransition.current){
                 const list = document.getElementsByClassName('related_song_item')
                 if(swipeIndex !== 0){
@@ -124,7 +123,7 @@ const RelatedSongWrapper = (props) =>{
     return(
         <div className="related_song_wrapper">
             <div className="related_song_heading_wrapper">
-                <h3 className="related_song_heading">You may also like... ({(relatedSongs !== null) ? relatedSongs.length : 0})</h3>
+                <h3 className="related_song_heading">{props.placeholder} ({(relatedSongs !== null) ? relatedSongs.length : 0})</h3>
             </div>
             <div className="related_song_content_wrapper">
                 <ul className="related_song_list">

@@ -37,6 +37,26 @@ router.get("/artist", async function(req, res){
     res.json(JSON.stringify({status: 200, body: result}))
 })
 
+router.get("/artistFull", async function(req, res){
+    const ytmusic = await new YTMusic().initialize()
+    let result;
+    let id;
+
+    if(req.query.id === 'undefined'){
+        await ytmusic.searchArtists(decodeURI(req.query.name)).then(artists =>{
+            artists.forEach(artist =>{
+                let artistName = req.query.name.replace(' ', '+')
+                if(artist.name.replace(' ', '+').toLowerCase() === artistName.toLowerCase())
+                    id = artist.artistId
+            })
+        }).catch(err => console.log(err))
+    }
+    await ytmusic.getArtist((req.query.id !== 'undefined') ? req.query.id : id).then(artist =>{
+        result = artist
+    }).catch(err => console.log(err))
+    res.json(JSON.stringify({status: 200, body: result}))
+})
+
 router.get("/relatedSong", async function(req, res){
     const ytmusic = await new YTMusic().initialize()
     let result;
