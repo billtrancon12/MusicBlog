@@ -17,6 +17,7 @@ const ArtistPage = () =>{
 
     useEffect(()=>{
         async function fetchBiography(artistName){
+            console.log(`http://ws.audioscrobbler.com/2.0/?method=artist.getInfo&artist=${artistName}&api_key=${process.env.REACT_APP_LAST_FM_API_KEY}&format=json`)
             await axios.get(`http://ws.audioscrobbler.com/2.0/?method=artist.getInfo&artist=${artistName}&api_key=${process.env.REACT_APP_LAST_FM_API_KEY}&format=json`).then(response =>{
                 setBio(response.data.artist.bio.summary)
                 setFetchBioGraphy(true)
