@@ -11,6 +11,7 @@ import BlogEditor from "./pages/blogEditor";
 import BlogPage from "./pages/blogPages";
 import SongSearchPage from "./pages/songSearch";
 import './css/media.css'
+import ArtistSearchPage from "./pages/artistSearch";
 
 function App() {
   return (
@@ -20,9 +21,8 @@ function App() {
         <Route path='/' element={<Homepage></Homepage>}></Route>
         <Route path='/playlist' element={<Playlist></Playlist>}></Route>
         <Route path='/artist'>
-          <Route path="/artist" element={<ArtistPage></ArtistPage>}>
-          <Route path=":artistName" element={<ArtistPage></ArtistPage>}></Route>
-        </Route>
+          <Route path="/artist" element={<ArtistSearchPage></ArtistSearchPage>}></Route>
+          <Route path=":artistName/:artistId?" element={<ArtistPage></ArtistPage>}></Route>
         </Route>
         <Route path='/song'>
           <Route path="/song" element={<SongSearchPage></SongSearchPage>}></Route>

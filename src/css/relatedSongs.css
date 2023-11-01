@@ -5,6 +5,14 @@
     width: 100%;
 }
 
+.related_song_item > a {
+    text-decoration: none;
+}
+
+.related_song_item{
+    text-align: center;
+}
+
 .related_song_heading_wrapper{
     width: 100%;
     padding: 20px 20px 0px 20px;
@@ -20,7 +28,7 @@
 
 .related_song_list{
     list-style: none;
-    padding: 0px 0px 0px 20px;
+    padding: 0px;
     width: 100%;
     position: relative;
     margin: auto;
@@ -46,4 +54,6 @@
     width: 80px;
 }
 
-
+.related_song_title{
+    color: black;
+}

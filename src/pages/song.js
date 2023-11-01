@@ -6,9 +6,9 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import LoadingPage from "./loading";
-import '../css/songWrapper.css'
 import ArtistWrapper from "../components/artistWrapper";
 import RelatedSongWrapper from "../components/relatedSongsWrapper";
+import '../css/songWrapper.css'
 
 
 const SongPage = () =>{
@@ -62,8 +62,14 @@ const SongPage = () =>{
                             setSongURL(song.videoId)
                             found =  true
                         }
-                        else if(!found && artistName.toLowerCase() === authorNameAfterParse.toLowerCase())
+                        else if(!found && artistName.toLowerCase() === authorNameAfterParse.toLowerCase()){
                             setSongURL(song.videoId)
+                            found = true
+                        }
+                        else if(!found){
+                            setSongURL(song.videoId)
+                            found = true
+                        }
                     }
                 })
             }).catch(err => console.log(err))
@@ -136,7 +142,7 @@ const SongPage = () =>{
                     {lyrics}
                 </div>
                 <div className="related_song">
-                    <RelatedSongWrapper artistID={artistID} artistName={authorName}></RelatedSongWrapper>
+                    <RelatedSongWrapper artistID={artistID} artistName={authorName} placeholder="You may also like..."></RelatedSongWrapper>
                 </div>
             </div>
         )
