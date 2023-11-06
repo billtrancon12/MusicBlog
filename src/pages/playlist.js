@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useLayoutEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, Navigate, useParams } from "react-router-dom";
 import SongWrapper from "../components/songWrapper";
 import ArtistWrapper from "../components/artistWrapper";
 import '../css/playlist.css'
@@ -8,6 +8,7 @@ import LoadingPage from "./loading";
 
 const PlaylistPage = () =>{
     const [videoSize, setVideoSize] = useState(window.innerWidth * 0.5)
+    const [isNextSong, setNextSong] = useState(false)
     const [menuSectionClicked, setMenuSectionClicked] = useState("Up Next")
     const [isFetchSongs, setFetchSongs] = useState(false)
     const [isFetchLyrics, setFetchLyrics] = useState(false)
@@ -134,26 +135,43 @@ const PlaylistPage = () =>{
     }
 
     function handleSectionClick(e){
-        if(e.target.childNodes[0].innerHTML === "Up Next" || e.target.innerHTML === "Up Next"){
+        if(e.target.childNodes[0].innerHTML === "Up Next" || e.target.childNodes[0].data === "Up Next"){
             setPlaylistMenu(upNext)
         }
-        else if(e.target.childNodes[0].innerHTML === "Lyrics" || e.target.innerHTML === "Lyrics"){
+        else if(e.target.childNodes[0].innerHTML === "Lyrics" || e.target.childNodes[0].data === "Lyrics"){
             setPlaylistMenu(lyrics)
         }
         else{
             setPlaylistMenu(upNext)
         }
-        setMenuSectionClicked((e.target.childNodes[0] !== undefined) ? e.target.childNodes[0].innerHTML : e.target.innerHTML)
+        setMenuSectionClicked((e.target.childNodes[0].innerHTML !== undefined) ? e.target.childNodes[0].innerHTML : e.target.childNodes[0].data)
     }
 
-    if(isFetchArtist && isFetchLyrics && isFetchSongs){
+    function nextSong(){
+        setNextSong(true)
+    }
+
+    if(isNextSong){
+        let index = parseInt(playlistIndex, 10)
+        let nextSongIndex = index + 1
+        setNextSong(false)
+        setFetchArtist(false)
+        setFetchLyrics(false)
+        setFetchSongs(false)
+        // console.log(nextSongIndex)
+        // console.log(1)
+        return(
+            <Navigate to={`/playlist/${playlistId}/${nextSongIndex}`}></Navigate>
+        )
+    }
+    else if(isFetchArtist && isFetchLyrics && isFetchSongs){
         return (
             <div className="playlist_content_wrapper">
                 <div className="playlist_song_title_wrapper">
                     <h3 className="song_title">{songName}</h3>
                 </div>
                 <div className="playlist_wrapper">
-                    <SongWrapper url={songURL} className="playlist_song_wrapper" width={videoSize} height={videoSize * 0.5}></SongWrapper>
+                    <SongWrapper url={songURL} className="playlist_song_wrapper" width={videoSize} height={videoSize * 0.5} onEnded={()=>nextSong()}></SongWrapper>
                     <div className="playlist_song_list_wrapper" style={{'maxHeight': `${(window.innerWidth >= 1000) ? videoSize * 0.5 : 300}px`}}>
                         <div className="playlist_song_list_menu">
                             <div className={"playlist_song_list_menu_section" + ((menuSectionClicked === "Up Next") ? " section_clicked" : "")} onClick={(e)=>handleSectionClick(e)}>
