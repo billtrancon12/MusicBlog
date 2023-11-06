@@ -37,6 +37,15 @@ router.get("/artist", async function(req, res){
     res.json(JSON.stringify({status: 200, body: result}))
 })
 
+router.get('/playlist', async function(req, res){
+    const ytmusic = await new YTMusic().initialize()
+    let result;
+    await ytmusic.searchPlaylists(decodeURI(req.query.name)).then(songs =>{
+        result = songs;
+    }).catch(err => console.log(err))
+    res.json(JSON.stringify({status: 200, body: result}))   
+})
+
 router.get("/artistFull", async function(req, res){
     const ytmusic = await new YTMusic().initialize()
     let result;

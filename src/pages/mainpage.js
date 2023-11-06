@@ -44,6 +44,7 @@ const Homepage = () =>{
                             key={i}
                         ></BlogWrapper>
                         blogsArr.push(blog)
+                        setBlogs(blogsArr)
                     }
                     // Get the cached database saved from previous fetched
                     if(sessionStorage.getItem('fetched homepage') !== null){
@@ -64,7 +65,6 @@ const Homepage = () =>{
                             blogsArr.push(newFetchedBlogs[i])
                         }
                     }
-                    setBlogs(blogsArr)
                     // Store cached
                     sessionStorage.setItem('fetched homepage', JSON.stringify(blogsArr))
                     sessionStorage.setItem('last fetched', loadEnd)

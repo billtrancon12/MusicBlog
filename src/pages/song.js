@@ -26,30 +26,8 @@ const SongPage = () =>{
     const {authorName} = useParams()
 
     useEffect(()=>{
-        const songNameBeforeParse = songName.split('+')
-        let songNameAfterParse = ""
-        songNameBeforeParse.forEach(str => {
-            if(str.length > 0){
-                const firstLetter = str[0].toUpperCase()
-                const remainLetter = str.slice(1)
-                songNameAfterParse += firstLetter + remainLetter + " "
-            }
-        })
-        songNameAfterParse = songNameAfterParse.slice(0, -1)
-        setSongName(songNameAfterParse)
-
-        const authorNameBeforeParse = authorName.split('+')
-        let authorNameAfterParse = ""
-        authorNameBeforeParse.forEach(str => {
-            if(str.length > 0){
-                const firstLetter = str[0].toUpperCase()
-                const remainLetter = str.slice(1)
-                authorNameAfterParse += firstLetter + remainLetter + " "
-            }
-        })
-        authorNameAfterParse = authorNameAfterParse.slice(0, -1)
-        setArtistName(authorNameAfterParse)
-
+        let songNameAfterParse = songName.replace('+', ' ')
+        let authorNameAfterParse = authorName.replace('+', ' ')
 
         async function getSongURL(name){
             await axios.get(`/.netlify/functions/ytmusic_api/song/?name=${name}`).then(res =>{
@@ -60,14 +38,17 @@ const SongPage = () =>{
                         const artistName = song.artists[0].name
                         if(artistName.toLowerCase() === authorNameAfterParse.toLowerCase() && song.name.toLowerCase() === songNameAfterParse.toLowerCase()){
                             setSongURL(song.videoId)
+                            setSongName(song.name)
                             found =  true
                         }
                         else if(!found && artistName.toLowerCase() === authorNameAfterParse.toLowerCase()){
                             setSongURL(song.videoId)
+                            setSongName(song.name)
                             found = true
                         }
                         else if(!found){
                             setSongURL(song.videoId)
+                            setSongName(song.name)
                             found = true
                         }
                     }
@@ -98,6 +79,7 @@ const SongPage = () =>{
                     if(artist.name === authorNameAfterParse){
                         setArtistThumbnail(artist.thumbnails[0].url)
                         setArtistID(artist.artistId)
+                        setArtistName(artist.name)
                     }
                 })
             }).catch(err => console.log(err))
@@ -129,12 +111,13 @@ const SongPage = () =>{
 
     if(isFetchedSong && isFetchedArtist && isFetchedLyrics){
         return (
-            <div className="song_wrapper">
+            <div className="song_content_wrapper">
                 <h3 className="song_title">{song_name}</h3>
                 <SongWrapper
                     url={songURL}
                     width={videoSize}
                     height={videoSize * 0.5}
+                    className="song_wrapper"
                 />
                 <ArtistWrapper artistName={artist_name} src={artist_thumbnail} artistQuery={authorName}></ArtistWrapper>
                 <div className="lyrics_wrapper">

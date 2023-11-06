@@ -1,5 +1,14 @@
-.song_wrapper{
+.song_content_wrapper{
     width: 100%;
+}
+
+.song_wrapper{
+    text-align: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px 0px 0px;
 }
 
 .lyrics_wrapper{
