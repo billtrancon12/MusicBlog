@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useLayoutEffect, useState } from "react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import SongWrapper from "../components/songWrapper";
 import ArtistWrapper from "../components/artistWrapper";
 import '../css/playlist.css'
@@ -22,6 +22,7 @@ const PlaylistPage = () =>{
     const [upNext, setUpNext] = useState(null)
     const {playlistId} = useParams()
     const {playlistIndex} = useParams()
+    const navigate = useNavigate()
 
     useEffect(()=>{
         async function fetchSongs(playlistId){
@@ -103,9 +104,16 @@ const PlaylistPage = () =>{
         }
 
         if(!isFetchArtist && !isFetchLyrics && !isFetchSongs){
-            fetchData()    
+            fetchData()
         }
-    }, [isFetchArtist, isFetchLyrics, isFetchSongs, playlistId, playlistIndex])
+        if(isNextSong){
+            let index = parseInt(playlistIndex, 10)
+            let nextSongIndex = index + 1
+            reload()
+            setNextSong(false)
+            navigate(`/playlist/${playlistId}/${nextSongIndex}`)
+        }
+    }, [isFetchArtist, isFetchLyrics, isFetchSongs, playlistId, playlistIndex, isNextSong, navigate])
 
     useLayoutEffect(()=>{
         function handleResize(){
@@ -151,20 +159,7 @@ const PlaylistPage = () =>{
         setNextSong(true)
     }
 
-    if(isNextSong){
-        let index = parseInt(playlistIndex, 10)
-        let nextSongIndex = index + 1
-        setNextSong(false)
-        setFetchArtist(false)
-        setFetchLyrics(false)
-        setFetchSongs(false)
-        // console.log(nextSongIndex)
-        // console.log(1)
-        return(
-            <Navigate to={`/playlist/${playlistId}/${nextSongIndex}`}></Navigate>
-        )
-    }
-    else if(isFetchArtist && isFetchLyrics && isFetchSongs){
+    if(isFetchArtist && isFetchLyrics && isFetchSongs){
         return (
             <div className="playlist_content_wrapper">
                 <div className="playlist_song_title_wrapper">
