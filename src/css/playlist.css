@@ -30,8 +30,11 @@
 
 .playlist_song_list_menu{
     width: 100%;
-    position: relative;
+    position: sticky;
     display: flex;
+    top: 0;
+    z-index: 2;
+    background-color: white;
 }
 
 .playlist_song_list_menu_section{

@@ -9,6 +9,7 @@ const SongWrapper = (props) =>{
                 width={props.width}
                 height={props.height}
                 controls={true}
+                onEnded={props.onEnded}
             />
         </div>
     )
