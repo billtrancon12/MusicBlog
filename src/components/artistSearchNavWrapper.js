@@ -38,17 +38,8 @@ const ArtistSearchNavWrapper = (props) =>{
             
             // Just show all the results if the query is not in english
             artistMatched = (isEnglish(props.artistName.split(" ")) === false) ? true : artistMatched;
-
-            // let artistNameAfterParse = ""
-            // artistNameBeforeParse.forEach(str => artistNameAfterParse += str + "+")
-            // artistNameAfterParse = artistNameAfterParse.slice(0, -1)
-    
-            // console.log(artistMatched)
             if(artistMatched){
-                const authorNameBeforeParse = artist.name.split(' ')
-                let authorNameAfterParse = ""
-                authorNameBeforeParse.forEach(str => authorNameAfterParse += str + "+")
-                authorNameAfterParse = authorNameAfterParse.slice(0, -1)
+                const authorNameAfterParse = artist.name.replace(' ', '+')
                 tempArr.push(
                     <li className="artist_search_nav_item" key={id}>
                         <Link to={`${authorNameAfterParse.toLowerCase()}/${artist.artistId}`}>

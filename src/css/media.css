@@ -14,6 +14,26 @@
     .top100_item{
         width: 80%;
     }
+    .playlist_wrapper{
+        display: block;
+    }
+    .playlist_song_wrapper{
+        text-align: center;
+        width: fit-content;
+        margin: auto;
+    }
+    .playlist_song_list_wrapper{
+        margin: 0px;
+    }
+    .playlist_song_title_wrapper{
+        margin: 0px;
+    }
+    .playlist_song_list_wrapper > h3{
+        margin: 0px;
+    }
+    .artist_wrapper{
+        margin: 12px 0px 5px 0px;
+    }
 }
 
 /*This is for the laptop with 800px or more*/
@@ -30,11 +50,33 @@
     .song_search_nav_item_artist{
         width: 35%;
     }
-    .artist_link_wrapper{
-        width: 50%;
+    .song_search_nav_item{
+        transform: none;
+    }
+
+    .artist_search_nav_container{
+        width: 70%;
+    }
+
+    .artist_search_nav_item_name{
+        width: 60%;
+    }
+    .artist_search_nav_item{
+        transform: none;
     }
     .top100_item{
         width: 90%;
+    }
+    .playlist_search_nav_container{
+        width: 90%;
+    }
+
+    .playlist_search_nav_item_name{
+        width: 60%;
+    }
+
+    .playlist_search_nav_item{
+        transform: none;
     }
 }
 
@@ -76,8 +118,15 @@
         transform: none;
     }
 
-    .artist_link_wrapper{
-        width: 50%;
+    .artist_search_nav_container{
+        width: 70%;
+    }
+
+    .artist_search_nav_item_name{
+        width: 60%;
+    }
+    .artist_search_nav_item{
+        transform: none;
     }
 
     .top100_item{
@@ -86,6 +135,18 @@
             perspective(1200px)
             translate3d(0px, 0px, -250px);
         transition: none;
+    }
+
+    .playlist_search_nav_container{
+        width: 70%;
+    }
+
+    .playlist_search_nav_item_name{
+        width: 60%;
+    }
+
+    .playlist_search_nav_item{
+        transform: none;
     }
 }
 
@@ -137,9 +198,17 @@
     .song_search_nav_item{
         transform: none;
     }
+    
+    .artist_search_nav_container{
+        width: 80%;
+    }
 
-    .artist_link_wrapper{
+    .artist_search_nav_item_name{
         width: 60%;
+    }
+
+    .artist_search_nav_item{
+        transform: none;
     }
 
     .top100_item{
@@ -150,7 +219,15 @@
         transition: none;
     }
 
-    .artist_search_nav_item{
+    .playlist_search_nav_container{
+        width: 80%;
+    }
+
+    .playlist_search_nav_item_name{
+        width: 60%;
+    }
+
+    .playlist_search_nav_item{
         transform: none;
     }
 }

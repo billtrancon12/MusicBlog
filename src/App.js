@@ -1,7 +1,7 @@
 import React from "react";
 import HomeNav from "./components/nav";
 import Homepage from "./pages/mainpage";
-import Playlist from "./pages/playlist";
+import PlaylistPage from "./pages/playlist";
 import ArtistPage from "./pages/artist";
 import SongPage from "./pages/song";
 import Top100 from "./pages/top100";
@@ -10,8 +10,11 @@ import { Routes, Route} from 'react-router-dom';
 import BlogEditor from "./pages/blogEditor";
 import BlogPage from "./pages/blogPages";
 import SongSearchPage from "./pages/songSearch";
-import './css/media.css'
 import ArtistSearchPage from "./pages/artistSearch";
+import PlaylistSearchPage from "./pages/playlistSearch";
+import './css/media.css'
+
+
 
 function App() {
   return (
@@ -19,7 +22,11 @@ function App() {
       <HomeNav></HomeNav>
       <Routes>
         <Route path='/' element={<Homepage></Homepage>}></Route>
-        <Route path='/playlist' element={<Playlist></Playlist>}></Route>
+        <Route path='/playlist'>
+          <Route path="/playlist" exact element={<PlaylistSearchPage></PlaylistSearchPage>}></Route>
+          <Route path=':playlistId/:playlistIndex?' element={<PlaylistPage></PlaylistPage>}></Route>
+          <Route path="personal/:playlistId?/:playlistIndex?" element={<div>Under construction!</div>}></Route>
+        </Route>
         <Route path='/artist'>
           <Route path="/artist" element={<ArtistSearchPage></ArtistSearchPage>}></Route>
           <Route path=":artistName/:artistId?" element={<ArtistPage></ArtistPage>}></Route>
