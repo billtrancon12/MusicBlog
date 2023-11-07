@@ -108,7 +108,8 @@ const PlaylistPage = () =>{
         }
         if(isNextSong){
             let index = parseInt(playlistIndex, 10)
-            let nextSongIndex = index + 1
+            // Go back to the beginning of the playlist if play all the songs
+            let nextSongIndex = (index + 1 === playlistMenu.length) ? 0 : index + 1
             reload()
             setNextSong(false)
             navigate(`/playlist/${playlistId}/${nextSongIndex}`)
