@@ -10,6 +10,7 @@ const SongWrapper = (props) =>{
                 height={props.height}
                 controls={true}
                 onEnded={props.onEnded}
+                config={{ file: { attributes: { playsInline: true, }, }, }}
             />
         </div>
     )
