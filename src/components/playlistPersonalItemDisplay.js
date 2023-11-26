@@ -33,7 +33,6 @@ const PlaylistPersonalItemDisplay = (props) =>{
         if(!isFetch){
             const songs = props.songs
             songs.forEach(song =>{
-                console.log("t",song)
                 fetchSong(song.videoId)
             })
             setFetch(true)
@@ -61,13 +60,13 @@ const PlaylistPersonalItemDisplay = (props) =>{
             setFetchAll(true)
         }
 
-        if(props.refresh === true){
+        if(props.refresh === true && isFetchAll && displayItems !== null){
             setFetch(false)
             setFetchAll(false)
             setDisplayItems(null)
             playlist.current = []
         }
-    }, [isFetch, isFetchAll, fetchFinishCount, props.videoId, props.songs, props.refresh])
+    }, [isFetch, isFetchAll, fetchFinishCount, displayItems, props.videoId, props.songs, props.refresh])
 
     return (
         <div className='playlist_personal_item_display_wrapper'>
