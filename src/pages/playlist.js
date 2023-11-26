@@ -114,7 +114,7 @@ const PlaylistPage = () =>{
             setNextSong(false)
             navigate(`/playlist/${playlistId}/${nextSongIndex}`)
         }
-    }, [isFetchArtist, isFetchLyrics, isFetchSongs, playlistId, playlistIndex, isNextSong, navigate])
+    }, [isFetchArtist, isFetchLyrics, isFetchSongs, playlistId, playlistIndex, isNextSong, playlistMenu.length, navigate])
 
     useLayoutEffect(()=>{
         function handleResize(){
