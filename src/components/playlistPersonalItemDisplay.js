@@ -33,7 +33,7 @@ const PlaylistPersonalItemDisplay = (props) =>{
         if(!isFetch){
             const songs = props.songs
             songs.forEach(song =>{
-                console.log("t " + song)
+                console.log("t",song)
                 fetchSong(song.videoId)
             })
             setFetch(true)
