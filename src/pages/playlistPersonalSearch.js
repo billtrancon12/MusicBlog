@@ -66,6 +66,7 @@ const PlaylistPersonalSearchPage = (props) =>{
             let temp = []
             playlists.forEach((playlist, id) => {
                 const contents = playlistContents.current.get(playlist.playlistName)
+                console.log(contents)
                 temp.push(<PlaylistPersonalSearchItem playlistName={playlist.playlistName} songs={contents} key={id} onClick={handleClickPlaylist}></PlaylistPersonalSearchItem>)
             })
             setPlaylistItems(temp)
