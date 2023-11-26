@@ -88,7 +88,7 @@ const RelatedSongWrapper = (props) =>{
                     })
                     songNameAfterParse = songNameAfterParse.slice(0, -1).toLowerCase()
                     tempArr.push(
-                        <li key={id} className='related_song_item'  id={id} onTouchStart={(e)=>handleTouchStart(e)} onTouchEnd={(e) => handleTouchEnd(e)}>
+                        <li key={id} className='related_song_item'  id={id} onTouchStart={(e)=>handleTouchStart(e)} onTouchEnd={(e) => handleTouchEnd(e)} onClick={()=>props.reload()}>
                             <Link to={`/song/${songNameAfterParse}/${props.artistName}`}>
                                 <div className="related_song_item_wrapper">
                                     <div className="related_song_item_thumbnail_wrapper">
@@ -117,7 +117,7 @@ const RelatedSongWrapper = (props) =>{
             handleSwipe()
         
         setIsSwipe(false)
-    }, [isFetched, props.artistID, props.artistName, swipeIndex, isSwipe])
+    }, [isFetched, props.artistID, props.artistName, swipeIndex, isSwipe, props])
 
 
     return(

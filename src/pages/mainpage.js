@@ -15,6 +15,7 @@ const Homepage = () =>{
     const [moreButton, setMoreButton] = useState("hide")
     const [loadFrom, setLoadFrom] = useState((sessionStorage.getItem('load from') === null) ? 0 : parseInt(sessionStorage.getItem("load from"), 10))
     const [loadEnd, setLoadEnd] = useState((sessionStorage.getItem("last fetched") === null) ? 2 : parseInt(sessionStorage.getItem("last fetched"), 10))
+    const [changeCount, setChangeCount] = useState(0);
     useEffect(() => {
         // sessionStorage.clear()
         if(!isFetch && (sessionStorage.getItem("fetched") === null || sessionStorage.getItem('fetched') === 'null')){
@@ -45,6 +46,7 @@ const Homepage = () =>{
                         ></BlogWrapper>
                         blogsArr.push(blog)
                         setBlogs(blogsArr)
+                        setChangeCount(changeCount + 1)
                     }
                     // Get the cached database saved from previous fetched
                     if(sessionStorage.getItem('fetched homepage') !== null){
@@ -96,7 +98,7 @@ const Homepage = () =>{
             if(maxBlogs > blogsArr.length - 1) setMoreButton("display")
             else setMoreButton('hide')
         }
-    }, [isFetch, loadEnd, loadFrom])
+    }, [isFetch, loadEnd, loadFrom, changeCount])
     
     return(
         <div style={{"textAlign": "center"}}>

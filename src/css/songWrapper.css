@@ -29,3 +29,87 @@
     margin-left: 15px;
 }
 
+.artist_playlist_wrapper{
+    width: 100%;
+    display: flex;
+}
+
+.song_add_playlist_wrapper{
+    position: relative;
+    width: 100%;
+}
+
+.song_add_playlist_button{
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    margin-right: 50px;
+    background-color: rgba(133, 193, 229, 0.2);
+    border-radius: 3px;
+    height: 30px;
+    width: fit-content;
+    font-size: 14px;
+    border: 1.5px solid rgba(133, 193, 229, 0.5);
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.2);
+}
+
+.song_add_playlist_button:hover, .song_add_playlist_button:active{
+    background-color: #C2E8FF;
+}
+
+.song_add_playlist_container{
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 200px;
+    margin-right: 10px;
+    justify-content: center;
+    background-color: white;
+    border-radius: 7px;
+    border: 1.5px solid rgba(133, 193, 229, 0.5);
+    transform: translateY(-20px);
+    animation-name: playlistTransitionUp;
+    animation-fill-mode: forwards;
+    animation-duration: 0.6s;
+    z-index: 1;
+}
+
+@keyframes playlistTransitionDown{
+    0%{
+        opacity: 0;
+        transform: translateY(-25px);
+        pointer-events: none;
+    }
+    100%{
+        opacity: 1;
+        transform: translateY(35px);
+        pointer-events: all;
+    }
+}
+
+@keyframes playlistTransitionUp{
+    0%{
+        opacity: 1;
+        transform: translateY(35px);
+        pointer-events: all;
+    }
+    100%{
+        opacity: 0;
+        transform: translateY(-25px);
+        pointer-events: none;
+    }
+}
+
+.song_add_playlist_container_show{
+    transform: translateY(25px);
+    opacity: 1;
+    animation-name: playlistTransitionDown;
+}
+
+.song_add_playlist_list{
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}

@@ -1,0 +1,57 @@
+.playlist_personal_search_wrapper{
+    position: relative;
+}
+
+.playlist_personal_search_list{
+    padding:0;
+    margin: 20px;
+}
+
+.playlist_personal_search_item_wrapper{
+    width: 100%;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    cursor: pointer;
+}
+
+.playlist_personal_search_item{
+    display: flex;
+    width: 100%;
+    position: relative;
+    max-width: 1000px;
+    margin: auto;
+    transform:
+        perspective(1500px)
+        translate3d(0px, 0px, -250px);
+    border-radius: 10px;
+    border: 1.5px solid #e6e6e6;
+    transition: 0.4s ease-in-out transform;
+}
+
+.playlist_personal_search_item:hover{
+    transform: translate3d(0px, 0px, -250px);
+}
+
+.playlist_personal_icon{
+    width: 50px;
+    align-items: center;
+}
+
+.playlist_personal_search_item_content{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin: 0px 10px 0px 10px;
+}
+
+.playlist_personal_search_item_name{
+    width: 50%;
+}
+
+.playlist_personal_search_item_count{
+    width: 50%;
+    display: flex;
+    justify-content: right;
+}

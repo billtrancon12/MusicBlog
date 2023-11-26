@@ -78,6 +78,12 @@
     .playlist_search_nav_item{
         transform: none;
     }
+
+    .playlist_personal_search_item{
+        transform: none;
+        transition: none;
+        margin: 10px;
+    }
 }
 
 /*This is for the tablet*/
@@ -147,6 +153,12 @@
 
     .playlist_search_nav_item{
         transform: none;
+    }
+
+    .playlist_personal_search_item{
+        transform: none;
+        transition: none;
+        margin: 10px;
     }
 }
 
@@ -229,5 +241,11 @@
 
     .playlist_search_nav_item{
         transform: none;
+    }
+
+    .playlist_personal_search_item{
+        transform: none;
+        transition: none;
+        margin: 10px;
     }
 }

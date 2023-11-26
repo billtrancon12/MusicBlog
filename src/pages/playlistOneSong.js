@@ -4,65 +4,41 @@ import { useLayoutEffect } from "react";
 import SongWrapper from "../components/songWrapper";
 import { useEffect } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import LoadingPage from "./loading";
 import ArtistWrapper from "../components/artistWrapper";
 import RelatedSongWrapper from "../components/relatedSongsWrapper";
 import '../css/songWrapper.css'
 import SongAddPlaylist from "../components/songAddPlaylist";
+import { useRef } from "react";
 
 
-const SongPage = () =>{
+const PlaylistOneSong = () =>{
     const [videoSize, setVideoSize] = useState(window.innerWidth * 0.5)
     const [lyrics, setLyrics] = useState(<p>Not found!</p>)
-    const [songURL, setSongURL] = useState("")
-    const [song_name, setSongName] = useState("")
     const [artist_name, setArtistName] = useState("")
     const [artist_thumbnail, setArtistThumbnail] = useState("")
     const [artistID, setArtistID] = useState("")
-    const [isFetchedSong, setFetchSong] = useState(false)
     const [isFetchedLyrics, setFetchLyrics] = useState(false)
     const [isFetchedArtist, setFetchArtist] = useState(false)
-    const {songName} = useParams()
-    const {authorName} = useParams()
-
+    const location = useLocation()
+    const {videoId} = useParams()
+    const {song} = (location.state === null) ? "" : location.state 
+    const artistName = useRef((song !== "" && song !== undefined) ? song.artistName : "")
+    const songName = useRef((song !== "" && song !== undefined) ? song.songName : "")
     
     function reload(){
         setFetchArtist(false)
-        setFetchSong(false)
         setFetchLyrics(false)
     }
 
     useEffect(()=>{
-        let songNameAfterParse = songName.replace('+', ' ')
-        let authorNameAfterParse = authorName.replace('+', ' ')
-
-        async function getSongURL(name){
-            await axios.get(`/.netlify/functions/ytmusic_api/song/?name=${name}`).then(res =>{
+        async function getSongDetail(videoId){
+            await axios.get(`/.netlify/functions/ytmusic_api/song/?videoId=${videoId}`).then(res=>{
                 const response = JSON.parse(res.data)
-                let found =  false
-                response.body.forEach(song => {
-                    if(song.artists[0] !== undefined){
-                        const artistName = song.artists[0].name
-                        if(artistName.toLowerCase() === authorNameAfterParse.toLowerCase() && song.name.toLowerCase() === songNameAfterParse.toLowerCase()){
-                            setSongURL(song.videoId)
-                            setSongName(song.name)
-                            found =  true
-                        }
-                        else if(!found && artistName.toLowerCase() === authorNameAfterParse.toLowerCase()){
-                            setSongURL(song.videoId)
-                            setSongName(song.name)
-                            found = true
-                        }
-                        else if(!found){
-                            setSongURL(song.videoId)
-                            setSongName(song.name)
-                            found = true
-                        }
-                    }
-                })
+                artistName.current = (response.body.artists !== null) ? response.body.artists[0].name : "N/A"
+                songName.current = response.body.name
             }).catch(err => console.log(err))
-            setFetchSong(true)
         }
         async function getSongLyrics(songName, authorName){
             await axios.get(`/.netlify/functions/ytmusic_api/lyrics/?songName=${songName}&authorName=${authorName}`).then(res =>{
@@ -85,7 +61,7 @@ const SongPage = () =>{
             await axios.get(`/.netlify/functions/ytmusic_api/artist/?name=${name}`).then(res =>{
                 const response = JSON.parse(res.data)
                 response.body.forEach(artist => {
-                    if(artist.name === authorNameAfterParse){
+                    if(artist.name.toLowerCase() === name.replace('+', ' ').toLowerCase()){
                         setArtistThumbnail(artist.thumbnails[0].url)
                         setArtistID(artist.artistId)
                         setArtistName(artist.name)
@@ -95,12 +71,22 @@ const SongPage = () =>{
             setFetchArtist(true)
         }
 
-        if(!isFetchedSong && !isFetchedArtist && !isFetchedLyrics){
-            getSongURL(songNameAfterParse + " " + authorNameAfterParse)
-            getSongLyrics(songNameAfterParse, authorNameAfterParse)
-            getArtist(authorNameAfterParse)
+        async function fetchSongWithoutState(videoId){
+            await getSongDetail(videoId)
+            getSongLyrics(songName.current.replace(' ', '+'), artistName.current.replace(' ', '+'))
+            getArtist(artistName.current.replace(' ', '+'))
         }
-    }, [lyrics, songURL, isFetchedSong, isFetchedLyrics, isFetchedArtist, songName, authorName])
+
+        if(!isFetchedArtist && !isFetchedLyrics){
+            if(song === "" || song === undefined){
+                fetchSongWithoutState(videoId)
+            }
+            else{
+                getSongLyrics(song.songName.replace(' ', '+'), song.artistName.replace(' ', '+'))
+                getArtist(song.artistName.replace(' ', '+'))
+            }
+        }
+    }, [lyrics, song, isFetchedLyrics, isFetchedArtist, videoId])
 
     useLayoutEffect(()=>{
         function handleResize(){
@@ -118,26 +104,26 @@ const SongPage = () =>{
         return () => window.removeEventListener('resize', handleResize)
     }, [videoSize])
 
-    if(isFetchedSong && isFetchedArtist && isFetchedLyrics){
+    if(isFetchedArtist && isFetchedLyrics){
         return (
             <div className="song_content_wrapper">
-                <h3 className="song_title">{song_name}</h3>
+                <h3 className="song_title">{songName.current}</h3>
                 <SongWrapper
-                    url={songURL}
+                    url={videoId}
                     width={videoSize}
                     height={videoSize * 0.5}
                     className="song_wrapper"
                 />
                 <div className="artist_playlist_wrapper">
-                    <ArtistWrapper artistName={artist_name} src={artist_thumbnail} artistQuery={authorName}></ArtistWrapper>
-                    <SongAddPlaylist artistName={artist_name.replace('+', ' ')} songName={songName.replace('+', ' ')} videoId={songURL}></SongAddPlaylist>
+                    <ArtistWrapper artistName={artist_name} src={artist_thumbnail} artistQuery={artistName.current}></ArtistWrapper>
+                    <SongAddPlaylist artistName={artist_name} songName={songName.current} videoId={videoId}></SongAddPlaylist>
                 </div>
                 <div className="lyrics_wrapper">
                     <h2>Lyrics</h2>
                     {lyrics}
                 </div>
                 <div className="related_song">
-                    <RelatedSongWrapper artistID={artistID} artistName={authorName} reload={reload} placeholder="You may also like..."></RelatedSongWrapper>
+                    <RelatedSongWrapper artistID={artistID} artistName={artistName.current} reload={reload} placeholder="You may also like..."></RelatedSongWrapper>
                 </div>
             </div>
         )
@@ -149,4 +135,4 @@ const SongPage = () =>{
     }
 }
 
-export default SongPage;
+export default PlaylistOneSong;

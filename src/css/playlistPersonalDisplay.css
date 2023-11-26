@@ -1,0 +1,93 @@
+.playlist_personal_item_display_wrapper{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 100%;
+    max-width: 700px;
+    background-color: white;
+    border-radius: 10px;
+    border: 1.5px solid #e6e6e6;
+    box-shadow: rgba(22, 31, 39, 0.42) 0px 45px 30px -45px;
+}
+
+.playlist_personal_item_display_heading_wrapper{
+    width: 100%;
+    height: 60px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid black;
+}
+
+.playlist_personal_item_close{
+    width: 40px;
+}
+
+.playlist_personal_item_close > svg{
+    background-color: #FF605C;
+    cursor: pointer;
+}
+
+.playlist_personal_item_close > svg:hover{
+    background-color: red;
+}
+
+.playlist_personal_item_display_playlist_name_wrapper{
+    width: 100%;
+    margin: 10px 20px 10px;
+}
+
+.playlist_personal_item_display_playlist_name{
+    font-size: 23px;
+}
+
+.playlist_personal_item_display_content_wrapper{
+    width: 100%;
+    position: relative;
+}
+
+.playlist_personal_item_display_list{
+    list-style: none;
+    padding: 0;
+    margin: 10px;
+}
+
+.playlist_personal_item_display_item{
+    border-radius: 12px;
+    border: 1px solid;
+    border-color:rgb(213, 220, 226);
+    margin: 10px 0px 10px;
+    background-color: #fcf1e3;;
+}
+
+.playlist_personal_item_display_item:hover{
+    background-color: #FAEBD7;
+}
+
+.playlist_personal_item_display_item > a{
+    display: flex;
+    width: 100%;
+    color: black;
+    text-decoration: none;
+}
+
+.playlist_personal_item_display_song_name_wrapper, .playlist_personal_item_display_artist_name_wrapper{
+    width: 50%;
+}
+
+.playlist_personal_item_display_song_name_wrapper{
+    margin-left: 15px;
+}
+
+.playlist_personal_item_display_button_wrapper{
+    text-align: center;
+    margin: 10px 0px 10px;
+}
+
+.playlist_personal_item_display_button{
+    width: 65px;
+    height: 40px;
+}

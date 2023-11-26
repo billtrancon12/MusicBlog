@@ -11,8 +11,10 @@ import BlogEditor from "./pages/blogEditor";
 import BlogPage from "./pages/blogPages";
 import SongSearchPage from "./pages/songSearch";
 import ArtistSearchPage from "./pages/artistSearch";
-import PlaylistSearchPage from "./pages/playlistSearch";
 import './css/media.css'
+import PlaylistHomepage from "./pages/playlistHomepage";
+// import PlaylistPersonalPage from "./pages/playlistPersonal";
+import PlaylistOneSong from "./pages/playlistOneSong";
 
 
 
@@ -23,9 +25,9 @@ function App() {
       <Routes>
         <Route path='/' element={<Homepage></Homepage>}></Route>
         <Route path='/playlist'>
-          <Route path="/playlist" exact element={<PlaylistSearchPage></PlaylistSearchPage>}></Route>
+          <Route path="/playlist" exact element={<PlaylistHomepage></PlaylistHomepage>}></Route>
           <Route path=':playlistId/:playlistIndex?' element={<PlaylistPage></PlaylistPage>}></Route>
-          <Route path="personal/:playlistId?/:playlistIndex?" element={<div>Under construction!</div>}></Route>
+          <Route path="/playlist/song/videoId/:videoId" element={<PlaylistOneSong></PlaylistOneSong>}></Route>
         </Route>
         <Route path='/artist'>
           <Route path="/artist" element={<ArtistSearchPage></ArtistSearchPage>}></Route>
@@ -33,6 +35,7 @@ function App() {
         </Route>
         <Route path='/song'>
           <Route path="/song" element={<SongSearchPage></SongSearchPage>}></Route>
+          <Route path="/song/videoId/:videoId" element={<SongSearchPage></SongSearchPage>}></Route>
           <Route path=":songName/:authorName" element={<SongPage></SongPage>}></Route>
         </Route>
         <Route path='/top100' element={<Top100></Top100>}></Route>
