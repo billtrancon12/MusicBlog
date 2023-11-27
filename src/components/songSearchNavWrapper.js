@@ -40,13 +40,15 @@ const SongSearchNavWrapper = (props) =>{
                         
             // Filter out the data, only show the matched query
             songNameBeforeParse.forEach(key =>{
-                if(key.toLowerCase() === props.songName.toLowerCase()) songMatched = true
+                const songNameArr = props.songName.split(' ')
+                songNameArr.forEach(name =>{
+                    if(key.toLowerCase() === name.toLowerCase()) songMatched = true
+                })
             })
             
             // Just show all the results if the query is not in english
             songMatched = (isEnglish(props.songName.split(" ")) === false) ? true : songMatched;
             const songNameAfterParse = song.name.replace(' ', '+')
-    
             if(song.artists[0] !== undefined && songMatched){
                 const authorNameAfterParse = song.artists[0].name.replace(' ', '+')
                 tempArr.push(

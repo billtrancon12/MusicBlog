@@ -32,8 +32,9 @@ const SongSearchPage = () =>{
                 }).catch(err => console.log(err))
                 setFetch(true)
 
-                if(tempNum === numChange.current)
+                if(tempNum === numChange.current){
                     setNavSearch(<SongSearchNavWrapper data={data} songName={querySearch}></SongSearchNavWrapper>)
+                }
             }
         }
         
