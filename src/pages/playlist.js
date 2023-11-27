@@ -74,7 +74,8 @@ const PlaylistPage = () =>{
 
         async function fetchData(){
             let songs = await fetchSongs(playlistId)
-            let song = songs[playlistIndex]
+            let index = (playlistIndex === undefined) ? 0 : playlistIndex
+            let song = songs[index]
 
             setSongName(song.title)
             setSongURL(song.resourceId.videoId)
@@ -85,7 +86,7 @@ const PlaylistPage = () =>{
             let tempArr = []
             songs.forEach((item, id) => {
                 tempArr.push(
-                    <li className={"up_next_item " + ((id === parseInt(playlistIndex, 10)) ? "playlist_song_chosen" : "")} id={"playlist_song_id " + id} key={id} onClick={()=>reload()}>
+                    <li className={"up_next_item " + ((id === parseInt(index, 10)) ? "playlist_song_chosen" : "")} id={"playlist_song_id " + id} key={id} onClick={()=>reload()}>
                         <Link to={`/playlist/${playlistId}/${id}`}>
                         <div className="up_next_song_wrapper">
                                 <img className="up_next_song_thumbnail" src={item.thumbnails.default.url} alt="song_thumbnail"></img>
@@ -110,7 +111,7 @@ const PlaylistPage = () =>{
             fetchData()
         }
         if(isNextSong){
-            let index = parseInt(playlistIndex, 10)
+            let index = (playlistIndex === undefined) ?  0 : parseInt(playlistIndex, 10)
             // Go back to the beginning of the playlist if play all the songs
             let nextSongIndex = (index + 1 === playlistMenu.length) ? 0 : index + 1
             reload()
