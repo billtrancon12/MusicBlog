@@ -44,7 +44,7 @@ const PlaylistPersonalItemDisplay = (props) =>{
                     <li className='playlist_personal_item_display_item' key={id}>
                         <Link to={`song/videoId/${song.videoId}`} state={{song: song}}>
                             <div className='playlist_personal_item_display_thumbnail_wrapper'>
-                                <img className='playlist_personal_item_display_thumbnail' src={song.thumbnail} alt={'display_thumbnail'}></img>
+                                <img className='playlist_personal_item_display_thumbnail' src={song.thumbnail} alt={'display_thumbnail'} style={{'width': '60px', 'height': '60px'}}></img>
                             </div>
                             <div className='playlist_personal_item_display_song_name_wrapper'>
                                 <span className='playlist_personal_item_display_song_name'>{song.songName}</span>
@@ -66,7 +66,7 @@ const PlaylistPersonalItemDisplay = (props) =>{
             setDisplayItems(null)
             playlist.current = []
         }
-    }, [isFetch, isFetchAll, fetchFinishCount, displayItems, props.videoId, props.songs, props.refresh])
+    }, [isFetch, isFetchAll, fetchFinishCount, displayItems, props.songs, props.refresh])
 
     return (
         <div className='playlist_personal_item_display_wrapper'>
@@ -84,8 +84,9 @@ const PlaylistPersonalItemDisplay = (props) =>{
                 </ul>
             </div>
             <div className='playlist_personal_item_display_button_wrapper'>
-                {/* <Link to={}></Link> */}
-                <Button className='playlist_personal_item_display_button'>Play All</Button>
+                <Link to={`/playlist/personal/${props.playlistName.replace(' ', '+')}`} state={{playlist: playlist.current}}>
+                    <Button className='playlist_personal_item_display_button'>Play All</Button>
+                </Link>
             </div>
         </div>
     )

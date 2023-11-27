@@ -93,7 +93,8 @@ const PlaylistPersonalSearchPage = (props) =>{
                 {(playlistItem !== null) ? 
                     <PlaylistPersonalItemDisplay 
                         refresh={isPlaylistClicked} 
-                        playlistName={playlistItem.playlistName} 
+                        playlistName={playlistItem.playlistName}
+                        playlistId={playlistItem.playlistId} 
                         songs={playlistItem.songs} 
                         onClick={handleClickedClosePlaylist}>
                     </PlaylistPersonalItemDisplay>

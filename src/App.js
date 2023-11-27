@@ -13,7 +13,7 @@ import SongSearchPage from "./pages/songSearch";
 import ArtistSearchPage from "./pages/artistSearch";
 import './css/media.css'
 import PlaylistHomepage from "./pages/playlistHomepage";
-// import PlaylistPersonalPage from "./pages/playlistPersonal";
+import PlaylistPersonalPage from "./pages/playlistPersonal";
 import PlaylistOneSong from "./pages/playlistOneSong";
 
 
@@ -28,6 +28,7 @@ function App() {
           <Route path="/playlist" exact element={<PlaylistHomepage></PlaylistHomepage>}></Route>
           <Route path=':playlistId/:playlistIndex?' element={<PlaylistPage></PlaylistPage>}></Route>
           <Route path="/playlist/song/videoId/:videoId" element={<PlaylistOneSong></PlaylistOneSong>}></Route>
+          <Route path="/playlist/personal/:playlistId/:playlistIndex?" element={<PlaylistPersonalPage></PlaylistPersonalPage>}></Route>
         </Route>
         <Route path='/artist'>
           <Route path="/artist" element={<ArtistSearchPage></ArtistSearchPage>}></Route>

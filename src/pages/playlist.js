@@ -5,6 +5,7 @@ import SongWrapper from "../components/songWrapper";
 import ArtistWrapper from "../components/artistWrapper";
 import '../css/playlist.css'
 import LoadingPage from "./loading";
+import SongAddPlaylist from "../components/songAddPlaylist";
 
 const PlaylistPage = () =>{
     const [videoSize, setVideoSize] = useState(window.innerWidth * 0.5)
@@ -17,6 +18,7 @@ const PlaylistPage = () =>{
     const [artist_name, setArtistName] = useState("")
     const [artist_thumbnail, setArtistThumbnail] = useState("")
     const [songName, setSongName] = useState("")
+    const [songThumbnail, setSongThumbnail] = useState("")
     const [songURL, setSongURL] = useState("")
     const [playlistMenu, setPlaylistMenu] = useState(null)
     const [upNext, setUpNext] = useState(null)
@@ -76,6 +78,7 @@ const PlaylistPage = () =>{
 
             setSongName(song.title)
             setSongURL(song.resourceId.videoId)
+            setSongThumbnail(song.thumbnails.default.url)
             fetchArtist(song.videoOwnerChannelTitle)
             fethcSongLyrics(song.title, song.videoOwnerChannelTitle)
 
@@ -114,7 +117,7 @@ const PlaylistPage = () =>{
             setNextSong(false)
             navigate(`/playlist/${playlistId}/${nextSongIndex}`)
         }
-    }, [isFetchArtist, isFetchLyrics, isFetchSongs, playlistId, playlistIndex, isNextSong, playlistMenu.length, navigate])
+    }, [isFetchArtist, isFetchLyrics, isFetchSongs, playlistId, playlistIndex, isNextSong, playlistMenu, navigate])
 
     useLayoutEffect(()=>{
         function handleResize(){
@@ -182,7 +185,10 @@ const PlaylistPage = () =>{
                         </ul>
                     </div>
                 </div>
-                <ArtistWrapper artistName={artist_name} src={artist_thumbnail} artistQuery={artist_name.replace(' ', '+')}></ArtistWrapper>
+                <div className="artist_playlist_wrapper">
+                    <ArtistWrapper artistName={artist_name} src={artist_thumbnail} artistQuery={artist_name.replace(' ', '+')}></ArtistWrapper>
+                    <SongAddPlaylist artistName={artist_name.replace('+', ' ')} songName={songName.replace('+', ' ')} videoId={songURL} thumbnail={songThumbnail}></SongAddPlaylist>
+                </div>
             </div>
         )
     }

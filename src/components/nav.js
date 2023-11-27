@@ -1,7 +1,7 @@
 import { Nav } from "rsuite";
 import HomeIcon from '@rsuite/icons/legacy/Home';
-import SearchIcon from '@mui/icons-material/Search';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+// import SearchIcon from '@mui/icons-material/Search';
+// import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 // import MenuIcon from '@mui/icons-material/Menu';
 import '../css/nav.css'
 import { useEffect, useLayoutEffect, useState } from "react";
@@ -81,12 +81,12 @@ const NavCustom = (props) => {
           <Link to="/top100" className={`rs-nav-item ${(props.chosenNav === "Top 100") ? "menu_clicked" : ""}`} onClick={props.menuClickedHandler}>Top 100</Link>
       </div>
       <div className="right_nav">
-        <div className="search_icon_wrapper">
+        {/* <div className="search_icon_wrapper">
           <SearchIcon></SearchIcon>
         </div>
         <div className="user_wrapper">
           <AccountCircleIcon></AccountCircleIcon>
-        </div>
+        </div> */}
       </div>
     </Nav>
   )

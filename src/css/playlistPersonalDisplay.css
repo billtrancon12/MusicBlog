@@ -90,4 +90,5 @@
 .playlist_personal_item_display_button{
     width: 65px;
     height: 40px;
+    cursor: pointer;
 }

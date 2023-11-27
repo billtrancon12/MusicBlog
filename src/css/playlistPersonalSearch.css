@@ -13,7 +13,6 @@
     margin: 0;
     padding: 0;
     list-style: none;
-    cursor: pointer;
 }
 
 .playlist_personal_search_item{
@@ -28,6 +27,7 @@
     border-radius: 10px;
     border: 1.5px solid #e6e6e6;
     transition: 0.4s ease-in-out transform;
+    cursor: pointer;
 }
 
 .playlist_personal_search_item:hover{

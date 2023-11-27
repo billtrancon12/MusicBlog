@@ -45,7 +45,7 @@ const SongAddPlaylistComponent = (props) => {
         for(let i = 0; i < songs.length; i++){
             let songName = songs[i].name
             let artistName = songs[i].artistName
-            if(songName === props.songName.toLowerCase() && artistName === props.artistName.toLowerCase()) return true
+            if(songName.toLowerCase() === props.songName.toLowerCase() && artistName.toLowerCase() === props.artistName.toLowerCase()) return true
         }
         return false
     }
@@ -54,9 +54,10 @@ const SongAddPlaylistComponent = (props) => {
         if(e.target.value === "unchosen"){
             let tempArr = songs
             tempArr.push({
-                name: props.songName.toLowerCase(),
-                artistName: props.artistName.toLowerCase(),
-                videoId: props.videoId
+                name: props.songName,
+                artistName: props.artistName,
+                videoId: props.videoId,
+                thumbnail: props.thumbnail
             })
             setSongs(tempArr)
             setUpdate(true)
