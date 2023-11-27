@@ -17,6 +17,7 @@ const SongPage = () =>{
     const [lyrics, setLyrics] = useState(<p>Not found!</p>)
     const [songURL, setSongURL] = useState("")
     const [song_name, setSongName] = useState("")
+    const [songThumbnail, setSongThumbnail] = useState("")
     const [artist_name, setArtistName] = useState("")
     const [artist_thumbnail, setArtistThumbnail] = useState("")
     const [artistID, setArtistID] = useState("")
@@ -47,16 +48,19 @@ const SongPage = () =>{
                         if(artistName.toLowerCase() === authorNameAfterParse.toLowerCase() && song.name.toLowerCase() === songNameAfterParse.toLowerCase()){
                             setSongURL(song.videoId)
                             setSongName(song.name)
+                            setSongThumbnail(song.thumbnails[0].url)
                             found =  true
                         }
                         else if(!found && artistName.toLowerCase() === authorNameAfterParse.toLowerCase()){
                             setSongURL(song.videoId)
                             setSongName(song.name)
+                            setSongThumbnail(song.thumbnails[0].url)
                             found = true
                         }
                         else if(!found){
                             setSongURL(song.videoId)
                             setSongName(song.name)
+                            setSongThumbnail(song.thumbnails[0].url)
                             found = true
                         }
                     }
@@ -130,7 +134,7 @@ const SongPage = () =>{
                 />
                 <div className="artist_playlist_wrapper">
                     <ArtistWrapper artistName={artist_name} src={artist_thumbnail} artistQuery={authorName}></ArtistWrapper>
-                    <SongAddPlaylist artistName={artist_name.replace('+', ' ')} songName={songName.replace('+', ' ')} videoId={songURL}></SongAddPlaylist>
+                    <SongAddPlaylist artistName={artist_name.replace('+', ' ')} songName={songName.replace('+', ' ')} videoId={songURL} thumbnail={songThumbnail}></SongAddPlaylist>
                 </div>
                 <div className="lyrics_wrapper">
                     <h2>Lyrics</h2>

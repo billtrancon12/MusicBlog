@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
-import ExploreButton from "../components/exploreButton";
-import RandomPlaylistButton from "../components/randomPlaylistButton";
-import QuizButton from "../components/quizButton";
+// import ExploreButton from "../components/exploreButton";
+// import RandomPlaylistButton from "../components/randomPlaylistButton";
+// import QuizButton from "../components/quizButton";
 import { useEffect } from "react";
 import BlogWrapper from "../components/blogWrapper";
 import { useState } from "react";
@@ -51,42 +51,7 @@ const Homepage = () =>{
                             setBlogCount(blogsArr.current.length)
                         }).catch((err)=>console.log(err))
 
-                        // const blog = 
-                        // <BlogWrapper
-                        //     href={`/blog/${data.topic}`}
-                        //     src={`data:image/png;base64,${imgData}`}
-                        //     topic={data.topic}
-                        //     content={data.content}
-                        //     key={i}
-                        // ></BlogWrapper>
-                        // blogsArr.push(blog)
-                        // setBlogs(blogsArr)
-                        // changeCount.current += 1
                     }
-                    // // Get the cached database saved from previous fetched
-                    // if(sessionStorage.getItem('fetched homepage') !== null){
-                    //     const tempArrs = JSON.parse(sessionStorage.getItem('fetched homepage'))
-                    //     const newFetchedBlogs = blogsArr.current
-                    //     const arr = []
-                    //     for(let i = 0; i < tempArrs.length; i++){ 
-                    //         const blogData = tempArrs[i].props
-                    //         arr.push(<BlogWrapper
-                    //             href={blogData.href}
-                    //             src={blogData.src}
-                    //             topic={blogData.topic}
-                    //             content={blogData.content}
-                    //             key={i}
-                    //     ></BlogWrapper>)
-                    //     }
-                    //     for(let i = 0; i < newFetchedBlogs.length; i++){
-                    //         arr.push(newFetchedBlogs[i])
-                    //     }
-                    // }
-                    // Store cached
-                    // sessionStorage.setItem('fetched homepage', JSON.stringify(blogsArr.current))
-                    // sessionStorage.setItem('last fetched', loadEnd)
-                    // sessionStorage.setItem('load from', loadFrom)
-                    // sessionStorage.setItem('fetched', true)
                 }).catch((err)=>console.log(err))
             }
             fetchData()
@@ -141,11 +106,11 @@ const Homepage = () =>{
                 <h1 style={{}}>Let's emerge and enjoy in music world today!</h1>
                 <h2>Homepage</h2>
                 <div className="homepage_button_wrapper">
-                    <ExploreButton onClick={()=>console.log(1)}></ExploreButton>
+                    {/* <ExploreButton onClick={()=>console.log(1)}></ExploreButton>
                     <RandomPlaylistButton></RandomPlaylistButton>
-                    <QuizButton></QuizButton>
+                    <QuizButton></QuizButton> */}
                 </div>
-                <h2 style={{"margin": "25px 5px"}}>News</h2>
+                {/* <h2 style={{"margin": "25px 5px"}}>News</h2> */}
                 {blogs}
                 <MoreButton className={`${moreButton}`} onClick={()=>{
                     setLoadFrom(loadEnd + 1)

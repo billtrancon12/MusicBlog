@@ -82,6 +82,7 @@ const SongAddPlaylist = (props) => {
                             artistName={props.artistName} 
                             playlistId={playlist.playlistId}
                             videoId={props.videoId}
+                            thumbnail={props.thumbnail}
                         />
                     )
                 })
@@ -109,7 +110,7 @@ const SongAddPlaylist = (props) => {
             setPlaylistItem(playlistRef.current)
             setSuccessCreate(-1)
         }
-    }, [isFetch, playlistItem, createPlaylistClicked, props.artistName, props.songName, props.videoId, successCreate])
+    }, [isFetch, playlistItem, createPlaylistClicked, props.artistName, props.songName, props.videoId, props.thumbnail, successCreate])
 
     function handleButtonClick(e){
         const playlist = document.getElementsByClassName("song_add_playlist_container")[0]
