@@ -99,7 +99,7 @@ const PlaylistPersonalPage = () =>{
                     <li className={"up_next_item " + ((id === parseInt(playlistIndex, 10)) ? "playlist_song_chosen" : "")} id={"playlist_song_id " + id} key={id} onClick={()=>reload()}>
                         <Link to={`/playlist/personal/${playlistId}/${id}`} state={{playlist: playlist}}>
                         <div className="up_next_song_wrapper">
-                                <img className="up_next_song_thumbnail" src={item.thumbnail} alt="song_thumbnail"></img>
+                                <img className="up_next_song_thumbnail" src={item.thumbnail} alt="song_thumbnail" style={{'width': '60px', 'height': '60px'}}></img>
                                 <div className="up_next_song_name"><span>{condenseText((playlist === undefined) ? item.name : item.songName, 25)}</span></div>
                                 <div className="up_next_song_artist"><span>{item.artistName}</span></div>                                
                             </div>
