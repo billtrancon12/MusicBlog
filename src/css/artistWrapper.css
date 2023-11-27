@@ -9,6 +9,7 @@
     display: flex;
     align-items: center;
     border-radius: 50px;
+    max-width: 500px;
 }
 
 .artist_link_wrapper:hover{
