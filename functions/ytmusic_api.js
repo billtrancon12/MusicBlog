@@ -36,7 +36,6 @@ router.get('/song', async function(req, res){
     else{
         await ytmusic.searchSongs(decodeURI(req.query.name) + decodeURI(req.query.artistName)).then(songs => {
             songs.forEach(song =>{
-                console.log(song)
                 if(song.videoId === req.query.videoId){
                     result = song
                     error = 2
@@ -48,19 +47,11 @@ router.get('/song', async function(req, res){
         })
         await ytmusic.searchVideos(decodeURI(req.query.name) + decodeURI(req.query.artistName)).then(videos => {
             videos.forEach(video =>{
-                console.log(video)
                 if(video.videoId === req.query.videoId){
                     result = video
                     error = 2
                 }
             })
-        }).catch(err => {
-            console.log(error);
-            error = err.message;
-        })
-        await ytmusic.getSong(result.videoId).then(song => {
-            result = song
-            error = 2
         }).catch(err => {
             console.log(error);
             error = err.message;
