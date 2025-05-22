@@ -27,17 +27,19 @@ router.get('/song', async function(req, res){
     if(req.query.videoId === undefined){
         await ytmusic.searchSongs(decodeURI(req.query.name)).then(songs =>{
             result = songs;
+            error = 2;
         }).catch(err => {
             console.log(error);
-            error = err;
+            error = err.message;
         })
     }
     else{
         await ytmusic.getSong(req.query.videoId).then(song => {
             result = song
+            error = 2;
         }).catch(err => {
             console.log(error);
-            error = err;
+            error = err.message;
         })
     }
     res.json(JSON.stringify({status: 200, body: result, error: error}))   
