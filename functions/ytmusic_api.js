@@ -22,18 +22,25 @@ app.use(function(req, res, next){
 router.get('/song', async function(req, res){
     const ytmusic = await new YTMusic().initialize()
     let result;
+    let error;
     
     if(req.query.videoId === undefined){
         await ytmusic.searchSongs(decodeURI(req.query.name)).then(songs =>{
             result = songs;
-        }).catch(err => console.log(err))
+        }).catch(err => {
+            console.log(error);
+            error = err;
+        })
     }
     else{
         await ytmusic.getSong(req.query.videoId).then(song => {
             result = song
-        }).catch(err => console.log(err))
+        }).catch(err => {
+            console.log(error);
+            error = err;
+        })
     }
-    res.json(JSON.stringify({status: 200, body: result}))   
+    res.json(JSON.stringify({status: 200, body: result, error: error}))   
 })
 
 router.get("/artist", async function(req, res){
