@@ -58,8 +58,15 @@ router.get('/song', async function(req, res){
             console.log(error);
             error = err.message;
         })
+        await ytmusic.getSong(result.videoId).then(song => {
+            result = song
+            error = 2
+        }).catch(err => {
+            console.log(error);
+            error = err.message;
+        })
     }
-    res.json(JSON.stringify({status: 200, body: result, error: error}))   
+    res.json(JSON.stringify({status: 200, body: result, error: error, videoId: result.videoId, Testing: req.query.videoId}))   
 })
 
 router.get("/artist", async function(req, res){
