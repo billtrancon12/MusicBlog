@@ -17,8 +17,8 @@ const PlaylistPersonalItemDisplay = (props) =>{
     const playlist = useRef([])
 
     useEffect(()=>{
-        async function fetchSong(videoId){
-            await axios.get(`/.netlify/functions/ytmusic_api/song/?videoId=${videoId}`).then(res =>{
+        async function fetchSong(name, artistName, videoId){
+            await axios.get(`/.netlify/functions/ytmusic_api/song/?videoId=${videoId}&name=${name}&artistName=${artistName}`).then(res =>{
                 const response = JSON.parse(res.data)
                 let artistName = (response.body.artists)
                 playlist.current.push({
@@ -33,7 +33,8 @@ const PlaylistPersonalItemDisplay = (props) =>{
         if(!isFetch){
             const songs = props.songs
             songs.forEach(song =>{
-                fetchSong(song.videoId)
+                // fetchSong(song.videoId)
+                fetchSong(song.name, song.artistName, song.videoId)
             })
             setFetch(true)
         }

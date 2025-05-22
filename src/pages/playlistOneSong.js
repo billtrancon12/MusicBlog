@@ -33,8 +33,8 @@ const PlaylistOneSong = () =>{
     }
 
     useEffect(()=>{
-        async function getSongDetail(videoId){
-            await axios.get(`/.netlify/functions/ytmusic_api/song/?videoId=${videoId}`).then(res=>{
+        async function getSongDetail(videoId, name, artistName){
+            await axios.get(`/.netlify/functions/ytmusic_api/song/?videoId=${videoId}&name=${name}&artistName=${artistName}`).then(res=>{
                 const response = JSON.parse(res.data)
                 artistName.current = (response.body.artists !== null) ? response.body.artists[0].name : "N/A"
                 songName.current = response.body.name
@@ -72,7 +72,7 @@ const PlaylistOneSong = () =>{
         }
 
         async function fetchSongWithoutState(videoId){
-            await getSongDetail(videoId)
+            await getSongDetail(videoId, songName.current.replace(' ', '+'), artistName.current.replace(' ', '+'))
             getSongLyrics(songName.current.replace(' ', '+'), artistName.current.replace(' ', '+'))
             getArtist(artistName.current.replace(' ', '+'))
         }
